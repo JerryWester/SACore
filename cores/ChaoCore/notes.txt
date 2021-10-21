@@ -1,0 +1,5 @@
+Sonic Adventure DX -Director's Cut- (GXSE8P)
+ChaoDataBaseAddress: 0x81055158
+
+SONIC ADVENTURE 2 BATTLE (GSNE8P)
+ChaoDataBaseAddress: 0x81639304
