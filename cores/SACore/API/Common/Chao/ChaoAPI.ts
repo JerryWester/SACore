@@ -1,12 +1,27 @@
 export const enum ChaoGarden {
-    NONE = 0xFF,
-    CHAO_GARDEN = 1,
+    UNDEFINED,
+    CHAO_GARDEN,
     HERO_GARDEN,
     DARK_GARDEN,
     STATION_SQUARE,
     EGG_CARRIER,
-    MYSTIC_RUINS
+    MYSTIC_RUINS,
+    NONE = 0xFF
 }
+
+export const enum ChaoArea
+{
+	Lobby,
+	NeutralGarden,
+	HeroGarden,
+	DarkGarden,
+	Race,
+	Entrance,
+	Kindergarten,
+	Stadium = 9,
+	Karate,
+	NameMachine = 12,
+};
 
 export const enum ChaoType {
     EMPTY,
@@ -911,6 +926,7 @@ export interface IChaoData {
     /* 0x4EB */ unknown_type: SADXAnimal; // 0x1
     /* 0x4EC */ field_4EC: Buffer; // 0x10
     /* 0x4FC */ sadx_character_bonds: ISADXCharacterBonds; // 0x24
+    pointer: number;
 }
 
 export interface IAnimal {

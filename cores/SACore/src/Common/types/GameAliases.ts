@@ -8,7 +8,7 @@ export class SupportedGames {
     }
 
     static SA2B_GC: IAddresses = {
-        chao_data: 0x803AD80C //(Ptr + 0x48E4 = Chao 1) //0x81639304 // 0x81638AE4?
+        chao_data: 0 //(Ptr + 0x48E4 = Chao 1) //0x81639304 // 0x81638AE4?
     }
 
     static NONE: IAddresses = {

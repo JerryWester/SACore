@@ -22,4 +22,7 @@ export class GlobalContext extends JSONTemplate implements IGlobalContext{
     get game_paused(): boolean{
         return this.ModLoader.emulator.rdramRead8(0x801CC17F) === 1;
     }
+    get current_level(): number{
+        return this.ModLoader.emulator.rdramRead8(0x803AD821);
+    }
 }

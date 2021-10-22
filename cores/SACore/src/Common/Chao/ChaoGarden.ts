@@ -11,14 +11,14 @@ export class ChaoGarden extends JSONTemplate implements ChaoAPI.IChaoGarden {
 
     chaos: ChaoAPI.IChaoData[];
 
-    constructor(ModLoader: IModLoaderAPI, log: ILogger) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, chao_data_func: () => number) {
         super();
         // this.ModLoader = ModLoader;
         // this.emulator = ModLoader.emulator;
         this.chaos = [];
         
         for (let i = 0; i < 24; i++) {
-            this.chaos[i] = new ChaoData(ModLoader, log, i);
+            this.chaos[i] = new ChaoData(ModLoader, log, chao_data_func, i);
         }
         Object.seal(this.chaos);
     }

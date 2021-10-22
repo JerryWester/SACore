@@ -28,15 +28,15 @@ export default class SACore implements ICore, IExtendedCore {
     postconstructor() {
         switch (this.rom_header.id) {
             case ROMHeaders.SADX_GC: {
+                current_game = SupportedGames.SADX_GC;
                 this.SADX = new SonicAdventureDX();
                 this.SADX.rom_header = this.rom_header;
-                current_game = SupportedGames.SADX_GC;
             } break;
 
             case ROMHeaders.SA2B_GC: {
+                current_game = SupportedGames.SA2B_GC;
                 this.SA2B = new SonicAdventure2Battle();
                 this.SA2B.rom_header = this.rom_header;
-                current_game = SupportedGames.SA2B_GC;
             } break;
         }
     }

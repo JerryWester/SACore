@@ -22,6 +22,8 @@ export class SonicAdventureDX implements ICore, API.SADX.ISADX, API.Common.ISACo
     global!: API.SADX.IGlobalContext;
     helper!: API.SADX.ISADXHelper;
 
+    chao_data() { return this.ModLoader.emulator.rdramRead32(0x0); }
+
     @Preinit()
     preinit() {
     }
@@ -34,7 +36,7 @@ export class SonicAdventureDX implements ICore, API.SADX.ISADX, API.Common.ISACo
     @Postinit()
     postinit(): void {
         this.sonic;
-        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger);
+        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger, this.chao_data);
         this.save = new SaveContext(this.ModLoader, this.ModLoader.logger);
         this.global = new GlobalContext(this.ModLoader, this.ModLoader.logger);;
         this.helper;

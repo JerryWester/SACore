@@ -21,7 +21,16 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2B, API.Common.
     save!: API.SA2B.ISaveContext;
     global!: API.SA2B.IGlobalContext;
     helper!: API.SA2B.ISA2BHelper;
+    last_known_scene = -1;
+    isChaoSafe = false;
 
+    chao_data() { return this.ModLoader.emulator.rdramRead32(0x803AD80C) + 0x48E4; }
+
+    generateChao() {
+        console.log("Generating chao_data: " + this.chao_data().toString(16));
+        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger, this.chao_data);
+    }
+    
     @Preinit()
     preinit() {
     }
@@ -34,7 +43,6 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2B, API.Common.
     @Postinit()
     postinit(): void {
         this.sonic;
-        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger);
         this.save = new SaveContext(this.ModLoader, this.ModLoader.logger);
         this.global = new GlobalContext(this.ModLoader, this.ModLoader.logger);;
         this.helper;
@@ -42,6 +50,25 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2B, API.Common.
 
     @onTick()
     onTick() {
+        if(this.global.game_paused) return;
+        if (this.global.current_level !== 90) this.isChaoSafe = false;
+        else if (this.global.current_level === 90) {
+            if (this.global.current_frame_count === 60) {
+                this.generateChao();
+                this.isChaoSafe = true;
+            }
+            if (this.isChaoSafe) {
+                if ((this.global.current_frame_count % 1000) === 0) {
+                    for (let i = 0; i < 24; i++) {
+                        if (this.chao.chaos[i].garden !== API.ChaoAPI.ChaoGarden.UNDEFINED) {
+                            console.log(`Chao[${i}] Name: ${this.chao.chaos[i].name}`);
+                            console.log(`Chao[${i}] PTR: ${this.chao.chaos[i].pointer.toString(16)}`);
+                            console.log(`Chao[${i}] Garden: ${this.chao.chaos[i].garden}`);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @onPostTick()

@@ -3,40 +3,115 @@ import { IPosition } from '../Common/Utils/IPosition';
 import { IRotation } from '../Common/Utils/IRotation';
 import * as API from '../imports';
 
-export interface IUpgrades {
-    SonicLightShoes: boolean;
-    SonicAncientLight: boolean;
-    SonicMagicGloves: boolean;
-    SonicFlameRing: boolean;
-    SonicBounceBracelet: boolean;
-    SonicMysticMelody: boolean;
-    TailsBooster: boolean;
-    TailsBazooka: boolean;
-    TailsLaserBlaster: boolean;
-    TailsMysticMelody: boolean;
-    KnucklesShovelClaw: boolean;
-    KnucklesSunglasses: boolean;
-    KnucklesHammerGloves: boolean;
-    KnucklesAirNecklace: boolean;
-    KnucklesMysticMelody: boolean;
-    SuperSonic: boolean;
-    ShadowAirShoes: boolean;
-    ShadowAncientLight: boolean;
-    ShadowFlameRing: boolean;
-    ShadowMysticMelody: boolean;
-    EggmanJetEngine: boolean;
-    EggmanLargeCannon: boolean;
-    EggmanLaserBlaster: boolean;
-    EggmanProtectiveArmor: boolean;
-    EggmanMysticMelody: boolean;
-    RougePickNails: boolean;
-    RougeTreasureScope: boolean;
-    RougeIronBoots: boolean;
-    RougeMysticMelody: boolean;
+export const enum LevelIDs {
+	BasicTest,
+	KnucklesTest,
+	SonicTest,
+	GreenForest,
+	WhiteJungle,
+	PumpkinHill,
+	SkyRail,
+	AquaticMine,
+	SecurityHall,
+	PrisonLane,
+	MetalHarbor,
+	IronGate,
+	WeaponsBed,
+	CityEscape,
+	RadicalHighway,
+	WeaponsBed2P,
+	WildCanyon,
+	MissionStreet,
+	DryLagoon,
+	SonicVsShadow1,
+	TailsVsEggman1,
+	SandOcean,
+	CrazyGadget,
+	HiddenBase,
+	EternalEngine,
+	DeathChamber,
+	EggQuarters,
+	LostColony,
+	PyramidCave,
+	TailsVsEggman2,
+	FinalRush,
+	GreenHill,
+	MeteorHerd,
+	KnucklesVsRouge,
+	CannonsCoreS,
+	CannonsCoreE,
+	CannonsCoreT,
+	CannonsCoreR,
+	CannonsCoreK,
+	MissionStreet2P,
+	FinalChase,
+	WildCanyon2P,
+	SonicVsShadow2,
+	CosmicWall,
+	MadSpace,
+	SandOcean2P,
+	DryLagoon2P,
+	PyramidRace,
+	HiddenBase2P,
+	PoolQuest,
+	PlanetQuest,
+	DeckRace,
+	DowntownRace,
+	CosmicWall2P,
+	GrindRace,
+	LostColony2P,
+	EternalEngine2P,
+	MetalHarbor2P,
+	IronGate2P,
+	DeathChamber2P,
+	BigFoot,
+	HotShot,
+	FlyingDog,
+	KingBoomBoo,
+	EggGolemS,
+	Biolizard,
+	FinalHazard,
+	EggGolemE,
+	Route101280 = 70,
+	KartRace,
+	ChaoWorld = 90,
+	Invalid
 }
 
-export const enum SonicStatus{
-    Ground,
+export interface IUpgrades {
+	SonicLightShoes: boolean;
+	SonicAncientLight: boolean;
+	SonicMagicGloves: boolean;
+	SonicFlameRing: boolean;
+	SonicBounceBracelet: boolean;
+	SonicMysticMelody: boolean;
+	TailsBooster: boolean;
+	TailsBazooka: boolean;
+	TailsLaserBlaster: boolean;
+	TailsMysticMelody: boolean;
+	KnucklesShovelClaw: boolean;
+	KnucklesSunglasses: boolean;
+	KnucklesHammerGloves: boolean;
+	KnucklesAirNecklace: boolean;
+	KnucklesMysticMelody: boolean;
+	SuperSonic: boolean;
+	ShadowAirShoes: boolean;
+	ShadowAncientLight: boolean;
+	ShadowFlameRing: boolean;
+	ShadowMysticMelody: boolean;
+	EggmanJetEngine: boolean;
+	EggmanLargeCannon: boolean;
+	EggmanLaserBlaster: boolean;
+	EggmanProtectiveArmor: boolean;
+	EggmanMysticMelody: boolean;
+	RougePickNails: boolean;
+	RougeTreasureScope: boolean;
+	RougeIronBoots: boolean;
+	RougeMysticMelody: boolean;
+}
+
+export const enum SonicStatus {
+	Ground,
 	OnObjectColli,
 	Hurt,
 	ObjectInteract,
@@ -54,8 +129,7 @@ export const enum SonicStatus{
 	Unknown6
 }
 
-export const enum SonicAction
-{
+export const enum SonicAction {
 	None,
 	Run,
 	SpinCharge = 3,
@@ -156,27 +230,34 @@ export const enum SonicAction
 };
 
 export interface ISonic {
-    status: SonicStatus;
-    action: SonicAction;
-    upgrades: IUpgrades;
-    position: IPosition;
-    rotation: IRotation;
+	status: SonicStatus;
+	action: SonicAction;
+	upgrades: IUpgrades;
+	position: IPosition;
+	rotation: IRotation;
 }
 
 export interface ISaveContext {
-  rings: number;
+	rings: number;
 }
 export interface IGlobalContext {
-  
+	global_frame_count: number;
+	current_frame_count: number;
+	game_paused: boolean;
+	current_level: number;
 }
 export interface ISA2BHelper {
 
 }
 
 export interface ISA2B extends ICore, API.Common.ISACommonCore {
-    sonic: API.SA2B.ISonic;
-    chao: API.ChaoAPI.IChaoGarden;
-    save: API.SA2B.ISaveContext;
-    helper: API.SA2B.ISA2BHelper;
-    global: API.SA2B.IGlobalContext;
-  }
+	sonic: API.SA2B.ISonic;
+	chao: API.ChaoAPI.IChaoGarden;
+	save: API.SA2B.ISaveContext;
+	helper: API.SA2B.ISA2BHelper;
+	global: API.SA2B.IGlobalContext;
+}
+
+export enum SA2BEvents {
+	ON_SCENE_CHANGE = 'onSceneChange',
+}
