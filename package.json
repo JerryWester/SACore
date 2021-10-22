@@ -1,12 +1,13 @@
 {
-  "name": "SonicAdventureChaoCore",
+  "name": "SACore",
   "version": "1.0.0",
-  "description": "",
+  "description": "Shared library for both Sonic Adventure games",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jerry Wester, Psi-Hate",
+  "credits": "X-Hax crew for documentation",
   "license": "ISC"
 }

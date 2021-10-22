@@ -1,11 +1,12 @@
-import { current_game } from '../ChaoCore';
+import { current_game } from '../../SACore';
 import { JSONTemplate } from 'modloader64_api/JSONTemplate';
-import { ChaoAPI, ChaoString } from '../../API/imports';
+import { ChaoAPI, ChaoString } from '../../../API/imports';
 import { ILogger, IModLoaderAPI } from 'modloader64_api/IModLoaderAPI';
 import IMemory from 'modloader64_api/IMemory';
 import { ClassroomLessonFlags, SA2BAnimalFlags, SADXAnimalFlags, ToyFlags } from './ChaoFlags';
 import { SA2BCharacterBonds, SADXCharacterBonds } from './ChaoCharBonds';
 import { ChaoDNA } from './ChaoDNA';
+import { SupportedGames } from '../types/GameAliases';
 
 export class ChaoData extends JSONTemplate implements ChaoAPI.IChaoData {
     private ModLoader: IModLoaderAPI;
@@ -144,7 +145,8 @@ export class ChaoData extends JSONTemplate implements ChaoAPI.IChaoData {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
-        this.instance = current_game.chao_data;
+        if(current_game === SupportedGames.SA2B_GC) this.instance = current_game.chao_data + 0x48E4;
+        else this.instance = current_game.chao_data;
         this.slot = slot;
         this.sadx_animal_behaviors = new SADXAnimalFlags(ModLoader, log, slot);
         this.sa2_animal_behaviors = new SA2BAnimalFlags(ModLoader, log, slot);

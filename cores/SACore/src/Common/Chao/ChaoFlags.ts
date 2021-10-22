@@ -1,9 +1,9 @@
 import { JSONTemplate } from "modloader64_api/JSONTemplate";
 import { ILogger, IModLoaderAPI } from "modloader64_api/IModLoaderAPI";
-import { ChaoAPI } from "../../API/imports";
+import { ChaoAPI } from "../../../API/imports";
 import IMemory from "modloader64_api/IMemory";
 import { FlagManager, Flag } from 'modloader64_api/FlagManager';
-import { current_game } from '../ChaoCore';
+import { current_game } from '../../SACore';
 
 export class SADXAnimalFlags extends JSONTemplate implements ChaoAPI.ISADXAnimalFlags {
     private ModLoader: IModLoaderAPI;

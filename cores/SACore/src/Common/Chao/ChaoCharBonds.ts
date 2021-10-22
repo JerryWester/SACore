@@ -1,8 +1,8 @@
 import { JSONTemplate } from "modloader64_api/JSONTemplate";
 import { ILogger, IModLoaderAPI } from "modloader64_api/IModLoaderAPI";
-import { ChaoAPI } from "../../API/imports";
+import { ChaoAPI } from "../../../API/imports";
 import IMemory from "modloader64_api/IMemory";
-import { current_game } from '../ChaoCore';
+import { current_game } from '../../SACore';
 
 const enum GameBondOffset {
     SADX = 0x4FC,

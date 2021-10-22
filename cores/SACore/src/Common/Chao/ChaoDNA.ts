@@ -1,6 +1,6 @@
-import { current_game } from '../ChaoCore';
+import { current_game } from '../../SACore';
 import { JSONTemplate } from 'modloader64_api/JSONTemplate';
-import { ChaoAPI } from '../../API/imports';
+import { ChaoAPI } from '../../../API/imports';
 import { ILogger, IModLoaderAPI } from 'modloader64_api/IModLoaderAPI';
 import IMemory from 'modloader64_api/IMemory';
 
