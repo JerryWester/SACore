@@ -26,8 +26,74 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2B, API.Common.
 
     chao_data() { return this.ModLoader.emulator.rdramRead32(0x803AD80C) + 0x48E4; }
 
+    randomChao(chao: API.ChaoAPI.IChaoData) {
+        chao.swim_fraction = Math.floor(Math.random() * 100);
+        chao.fly_fraction = Math.floor(Math.random() * 100);
+        chao.run_fraction = Math.floor(Math.random() * 100);
+        chao.power_fraction = Math.floor(Math.random() * 100);
+        chao.stamina_fraction = Math.floor(Math.random() * 100);
+
+        chao.swim_grade = Math.floor(Math.random() * 6);
+        chao.fly_grade = Math.floor(Math.random() * 6);
+        chao.run_grade = Math.floor(Math.random() * 6);
+        chao.power_grade = Math.floor(Math.random() * 6);
+        chao.stamina_grade = Math.floor(Math.random() * 6);
+
+        chao.swim_level = Math.floor(Math.random() * 100);
+        chao.fly_level = Math.floor(Math.random() * 100);
+        chao.run_level = Math.floor(Math.random() * 100);
+        chao.power_level = Math.floor(Math.random() * 100);
+        chao.stamina_level = Math.floor(Math.random() * 100);
+
+        chao.swim_stat = Math.floor(Math.random() * 3267);
+        chao.fly_stat = Math.floor(Math.random() * 3267);
+        chao.run_stat = Math.floor(Math.random() * 3267);
+        chao.power_stat = Math.floor(Math.random() * 3267);
+        chao.stamina_stat = Math.floor(Math.random() * 3267);
+
+        let color_values = Object.values(API.ChaoAPI.SA2BColor).map(val => {
+            if (typeof(val) === "string") {
+                return Number.parseInt(val);
+            } else return val;
+        });
+        chao.color = color_values[Math.floor(Math.random() * color_values.length)];
+
+        let eye_values = Object.values(API.ChaoAPI.Eyes).map(val => {
+            if (typeof(val) === "string") {
+                return Number.parseInt(val);
+            } else return val;
+        });
+        chao.eye_type = eye_values[Math.floor(Math.random() * eye_values.length)];
+
+        let mouth_values = Object.values(API.ChaoAPI.Mouth).map(val => {
+            if (typeof(val) === "string") {
+                return Number.parseInt(val);
+            } else return val;
+        });
+        chao.mouth_type = mouth_values[Math.floor(Math.random() * mouth_values.length)];
+
+        let animal = Object.values(API.ChaoAPI.SA2BAnimal).map(val => {
+            if (typeof(val) === "string") {
+                return Number.parseInt(val);
+            } else return val;
+        });
+        chao.sa2b_arm_type = animal[Math.floor(Math.random()* animal.length)];
+        chao.sa2b_ear_type = animal[Math.floor(Math.random()* animal.length)];
+        chao.sa2b_forehead_type = animal[Math.floor(Math.random()* animal.length)];
+        chao.sa2b_horn_type = animal[Math.floor(Math.random()* animal.length)];
+        chao.sa2b_leg_type = animal[Math.floor(Math.random()* animal.length)];
+        chao.sa2b_tail_type = animal[Math.floor(Math.random()* animal.length)];
+        chao.sa2b_wing_type = animal[Math.floor(Math.random()* animal.length)];
+        chao.sa2b_face_type = animal[Math.floor(Math.random()* animal.length)];
+
+        chao.alignment = (Math.random() * 2) - 1;
+        chao.monotone_highlights = !Math.floor(Math.random() * 2);
+        chao.shiny = !Math.floor(Math.random() * 2);
+        chao.hide_feet = !Math.floor(Math.random() * 2);
+    }
+
     generateChao() {
-        console.log("Generating chao_data: " + this.chao_data().toString(16));
+        //console.log("Generating chao_data: " + this.chao_data().toString(16));
         this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger, this.chao_data);
     }
     
@@ -53,7 +119,7 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2B, API.Common.
         if(this.global.game_paused) return;
         if (this.global.current_level !== 90) this.isChaoSafe = false;
         else if (this.global.current_level === 90) {
-            if (this.global.current_frame_count === 60) {
+            if (this.global.current_frame_count === 20) {
                 this.generateChao();
                 this.isChaoSafe = true;
             }
@@ -61,9 +127,9 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2B, API.Common.
                 if ((this.global.current_frame_count % 1000) === 0) {
                     for (let i = 0; i < 24; i++) {
                         if (this.chao.chaos[i].garden !== API.ChaoAPI.ChaoGarden.UNDEFINED) {
-                            console.log(`Chao[${i}] Name: ${this.chao.chaos[i].name}`);
-                            console.log(`Chao[${i}] PTR: ${this.chao.chaos[i].pointer.toString(16)}`);
-                            console.log(`Chao[${i}] Garden: ${this.chao.chaos[i].garden}`);
+                            // console.log(`Chao[${i}] Name: ${this.chao.chaos[i].name}`);
+                            // console.log(`Chao[${i}] PTR: ${this.chao.chaos[i].pointer.toString(16)}`);
+                            // console.log(`Chao[${i}] Garden: ${this.chao.chaos[i].garden}`);
                         }
                     }
                 }

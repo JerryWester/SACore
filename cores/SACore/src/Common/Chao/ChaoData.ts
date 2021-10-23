@@ -6,7 +6,6 @@ import IMemory from 'modloader64_api/IMemory';
 import { ClassroomLessonFlags, SA2BAnimalFlags, SADXAnimalFlags, ToyFlags } from './ChaoFlags';
 import { SA2BCharacterBonds, SADXCharacterBonds } from './ChaoCharBonds';
 import { ChaoDNA } from './ChaoDNA';
-import { SupportedGames } from '../types/GameAliases';
 
 export class ChaoData extends JSONTemplate implements ChaoAPI.IChaoData {
     private ModLoader: IModLoaderAPI;

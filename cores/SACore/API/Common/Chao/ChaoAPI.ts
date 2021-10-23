@@ -1,4 +1,4 @@
-export const enum ChaoGarden {
+export enum ChaoGarden {
     UNDEFINED,
     CHAO_GARDEN,
     HERO_GARDEN,
@@ -9,7 +9,7 @@ export const enum ChaoGarden {
     NONE = 0xFF
 }
 
-export const enum ChaoArea
+export enum ChaoArea
 {
 	Lobby,
 	NeutralGarden,
@@ -23,7 +23,7 @@ export const enum ChaoArea
 	NameMachine = 12,
 };
 
-export const enum ChaoType {
+export enum ChaoType {
     EMPTY,
     EGG,
     CHILD,
@@ -52,7 +52,7 @@ export const enum ChaoType {
     AMY
 }
 
-export const enum Grade {
+export enum Grade {
     E,
     D,
     C,
@@ -61,13 +61,13 @@ export const enum Grade {
     S
 }
 
-export const enum Emotiball {
+export enum Emotiball {
     NORMAL,
     FLAME,
     NONE
 }
 
-export const enum Eyes {
+export enum Eyes {
     NORMAL,
     PAINFUL,
     CLOSED_STRAIGHT,
@@ -84,7 +84,7 @@ export const enum Eyes {
     YELLOW_CHAOS
 }
 
-export const enum Medal {
+export enum Medal {
     NONE,
     AQUAMARINE,
     TOPAZ,
@@ -103,7 +103,7 @@ export const enum Medal {
     SAPPHIRE
 }
 
-export const enum Mouth {
+export enum Mouth {
     NONE,
     TOOTHY_SMILE,
     OPEN,
@@ -122,14 +122,14 @@ export const enum Mouth {
     SQUIGGLY_MOUSTACHE_2
 }
 
-export const enum SADXBodyType {
+export enum SADXBodyType {
     NORMAL,
     EGG_CHAO,
     OMOCHAO,
     NONE
 }
 
-export const enum SA2BBodyType {
+export enum SA2BBodyType {
     NORMAL,
     EGG_CHAO,
     OMOCHAO,
@@ -137,7 +137,7 @@ export const enum SA2BBodyType {
     NONE = 5
 }
 
-export const enum SADXColor {
+export enum SADXColor {
     NORMAL,
     YELLOW,
     WHITE,
@@ -154,7 +154,7 @@ export const enum SADXColor {
     BLACK
 }
 
-export const enum SA2BColor {
+export enum SA2BColor {
     NORMAL,
     YELLOW,
     WHITE,
@@ -171,7 +171,7 @@ export const enum SA2BColor {
     BLACK
 }
 
-export const enum SADXEggColor {
+export enum SADXEggColor {
     NORMAL,
     YELLOW_MONO_TONE,
     WHITE_MONO_TONE,
@@ -243,7 +243,7 @@ export const enum SADXEggColor {
     GLASS
 }
 
-export const enum SA2BEggColor {
+export enum SA2BEggColor {
     NORMAL,
     YELLOW_MONO_TONE,
     WHITE_MONO_TONE,
@@ -301,7 +301,7 @@ export const enum SA2BEggColor {
     GLITCHY_NORMAL
 }
 
-export const enum SADXTexture {
+export enum SADXTexture {
     NONE,
     YELLOW_JEWEL,
     WHITE_JEWEL,
@@ -321,7 +321,7 @@ export const enum SADXTexture {
     MOON
 }
 
-export const enum SA2BTexture {
+export enum SA2BTexture {
     NONE,
     YELLOW_JEWEL,
     WHITE_JEWEL,
@@ -341,7 +341,7 @@ export const enum SA2BTexture {
     MOON
 }
 
-export const enum FavoriteFruit {
+export enum FavoriteFruit {
     ROUND_FRUIT_1,
     ROUND_FRUIT_2,
     TRIANGLE_FRUIT_1,
@@ -434,7 +434,7 @@ export interface IToyFlags {
     watering_can: boolean;
 }
 
-export const enum ItemCategory {
+export enum ItemCategory {
     EGG = 1,
     FRUIT = 3,
     SEED = 7,
@@ -442,7 +442,7 @@ export const enum ItemCategory {
     MENU_THEME = 16
 }
 
-export const enum SADXAnimal {
+export enum SADXAnimal {
     SEAL,
     PENGUIN,
     OTTER,
@@ -461,7 +461,7 @@ export const enum SADXAnimal {
     NONE = 255
 }
 
-export const enum SA2BAnimal {
+export enum SA2BAnimal {
     PENGUIN,
     SEAL,
     OTTER,
@@ -490,7 +490,7 @@ export const enum SA2BAnimal {
     NONE = 255
 }
 
-export const enum SADXFruit {
+export enum SADXFruit {
     NONE = 255,
     REGULAR_FRUIT = 24,
     STRONG_FRUIT = 3,
@@ -514,7 +514,7 @@ export const enum SADXFruit {
     SMART_FRUIT = 12
 }
 
-export const enum SA2BFruit {
+export enum SA2BFruit {
     NONE = 255,
     CHAO_GARDEN_FRUIT = 0,
     HERO_GARDEN_FRUIT = 1,
@@ -542,7 +542,7 @@ export const enum SA2BFruit {
     GRAPES = 23
 }
 
-export const enum SADXHat {
+export enum SADXHat {
     NONE,
     PUMPKIN,
     SKULL,
@@ -630,7 +630,7 @@ export const enum SADXHat {
     GLASS_EGG_SHELL
 }
 
-export const enum SA2BHat {
+export enum SA2BHat {
     NONE,
     PUMPKIN,
     SKULL,
@@ -704,7 +704,7 @@ export const enum SA2BHat {
     GLITCHY_NORMAL_EGG_SHELL
 }
 
-export const enum Seed {
+export enum Seed {
     STRONG_SEED,
     TASTY_SEED,
     HERO_SEED,
@@ -715,7 +715,7 @@ export const enum Seed {
     NONE = 255
 }
 
-export const enum Theme {
+export enum Theme {
     OMOCHAO_THEME,
     AMY_THEME,
     MARIA_THEME
@@ -763,7 +763,7 @@ export interface IChaoCharacterBond {
     /* 0x2 */ unknown: number; // 0x4
 }
 
-export const enum SADXCharacters {
+export enum SADXCharacters {
     SONIC,
     TAILS,
     KNUCKLES,
@@ -781,7 +781,7 @@ export interface ISADXCharacterBonds {
     /* 0x1E */ big: IChaoCharacterBond; // 0x6
 }
 
-export const enum SA2BCharacters {
+export enum SA2BCharacters {
     SONIC,
     SHADOW,
     TAILS,
@@ -816,9 +816,9 @@ export interface IChaoData {
     /* 0x02A */ run_grade: Grade; // 0x1
     /* 0x02B */ power_grade: Grade; // 0x1
     /* 0x02C */ stamina_grade: Grade; // 0x1
-    /* 0x02D */ lucky_grade: Grade; // 0x1
-    /* 0x02E */ intelligence_grade: Grade; // 0x1
-    /* 0x02F */ unknown_grade: Grade; // 0x1
+    /* 0x02D */ lucky_grade: number; // 0x1
+    /* 0x02E */ intelligence_grade: number; // 0x1
+    /* 0x02F */ unknown_grade: number; // 0x1
     /* 0x030 */ swim_level: number; // 0x1
     /* 0x031 */ fly_level: number; // 0x1
     /* 0x032 */ run_level: number; // 0x1
