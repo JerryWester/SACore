@@ -1,7 +1,7 @@
 // import { current_game } from '../../SACore';
 import { JSONTemplate } from 'modloader64_api/JSONTemplate';
 import { ILogger, IModLoaderAPI } from 'modloader64_api/IModLoaderAPI';
-import { ISaveContext } from "cores/SACore/API/SA2B/SA2B_API";
+import { ISaveContext } from "../../API/SA2B/SA2B_API";
 import IMemory from 'modloader64_api/IMemory';
 
 export class SaveContext extends JSONTemplate implements ISaveContext {
@@ -13,7 +13,10 @@ export class SaveContext extends JSONTemplate implements ISaveContext {
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
     }
+    jsonFields: string[] = [
+        'rings'
+    ];
 
-    get rings() { return this.emulator.rdramRead32(0x801CC204); }
-    set rings(num: number) { this.emulator.rdramWrite32(0x801CC204, num); }
+    get rings() { return this.emulator.rdramReadS16(0x8074C7A8); }
+    set rings(num: number) { this.emulator.rdramWrite16(0x8074C7A8, num); }
 }

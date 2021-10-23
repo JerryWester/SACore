@@ -3,6 +3,7 @@ import { ICore, IExtendedCore, IModLoaderAPI } from 'modloader64_api/IModLoaderA
 import { IRomHeader } from 'modloader64_api/IRomHeader';
 import { setupMLInjects } from 'modloader64_api/ModLoaderAPIInjector';
 import { setupLifecycle_IPlugin, setupLifecycle } from 'modloader64_api/PluginLifecycle';
+import { ISA_Main } from '../API/Common/ISA_Main';
 import { SupportedGames } from './Common/types/GameAliases';
 import { SonicAdventure2Battle } from './SonicAdventure2Battle';
 import { SonicAdventureDX } from './SonicAdventureDX';
@@ -14,7 +15,7 @@ export const enum ROMHeaders {
 
 export let current_game = SupportedGames.NONE;
 
-export default class SACore implements ICore, IExtendedCore {
+export default class SACore implements ICore, ISA_Main, IExtendedCore {
     
     header = [ROMHeaders.SADX_GC, ROMHeaders.SA2B_GC];
     ModLoader!: IModLoaderAPI;

@@ -326,12 +326,12 @@ export class ChaoData extends JSONTemplate implements ChaoAPI.IChaoData {
     get mouth_type() { return this.emulator.rdramRead8(this.mouth_type_addr); }
     get ball_type() { return this.emulator.rdramRead8(this.ball_type_addr); }
     get headgear() { return this.emulator.rdramRead8(this.headgear_addr); }
-    get hide_feet() { return this.emulator.rdramRead8(this.hide_feet_addr) !== 0; }
+    get hide_feet() { return !!this.emulator.rdramRead8(this.hide_feet_addr); }
     get medal() { return this.emulator.rdramRead8(this.medal_addr); }
     get color() { return this.emulator.rdramRead8(this.color_addr); }
-    get monotone_highlights() { return this.emulator.rdramRead8(this.monotone_highlights_addr) !== 0; }
+    get monotone_highlights() { return !!this.emulator.rdramRead8(this.monotone_highlights_addr); }
     get texture() { return this.emulator.rdramRead8(this.texture_addr); }
-    get shiny() { return this.emulator.rdramRead8(this.shiny_addr) !== 0; }
+    get shiny() { return !!this.emulator.rdramRead8(this.shiny_addr); }
     get egg_color() { return this.emulator.rdramRead8(this.egg_color_addr); }
     get body_type() { return this.emulator.rdramRead8(this.body_type_addr); }
     get body_type_animal() { return this.emulator.rdramRead8(this.body_type_animal_addr); }

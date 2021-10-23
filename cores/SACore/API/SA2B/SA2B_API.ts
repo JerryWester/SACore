@@ -3,7 +3,90 @@ import { IPosition } from '../Common/Utils/IPosition';
 import { IRotation } from '../Common/Utils/IRotation';
 import * as API from '../imports';
 
-export const enum LevelIDs {
+export const enum GameStates {
+	Inactive = 0,
+	Loading = 1,
+	LoadItems = 2,
+	LoadLevel = 3,
+	ReturnToMenu_1 = 4,
+	ReloadCharacter = 5,
+	ReturnToMenu_2 = 6,
+	LoadFinished = 7,
+	Exit_1 = 8,
+	RestartLevel_NoLifeLost = 9,
+	Exit_2 = 10,
+	Exit_3 = 11,
+	RestartLevel_1 = 12,
+	NormalRestart = 13,
+	NormalExit = 14,
+	ReturnRing = 15,
+	Ingame = 16,
+	Pause = 17,
+	MemoryCard = 18,
+	GoToNextLevel = 19,
+	state_14 = 20,
+	state_15 = 21,
+	state_16 = 22,
+	state_17 = 23,
+	state_18 = 24,
+	state_19 = 25,
+	state_1A = 26,
+	state_1B = 27,
+	state_1C = 28,
+	state_1D = 29,
+	state_1E = 30,
+	state_1F = 31,
+	state_20 = 32,
+	state_21 = 33,
+	state_22 = 34,
+	state_23 = 35,
+	state_24 = 36,
+	state_25 = 37,
+	state_26 = 38,
+	state_27 = 39,
+	state_28 = 40,
+	state_29 = 41,
+	state_2A = 42,
+	state_2B = 43,
+	state_2C = 44,
+	state_2D = 45,
+	state_2E = 46,
+	state_2F = 47,
+	state_30 = 48,
+	state_31 = 49,
+	state_32 = 50,
+};
+
+export const enum Menus
+{
+	TitleScreen = 0x0,
+	Main = 0x1,
+	StorySelect = 0x2,
+	StageSelect = 0x3,
+	Old2PBattle = 0x4,
+	Unknown_5 = 0x5,
+	Settings = 0x6,
+	Unknown_7 = 0x7,
+	SoundTest = 0x8,
+	FileSelect = 0x9,
+	Kart = 0xA,
+	DownloadEventMaybe = 0xB,
+	BossAttack = 0xC,
+	Tutorial = 0xD,
+	Unknown_E = 0xE,
+	Emblems = 0xF,
+	Battle = 0x10,
+	Unknown_11 = 0x11,
+	Unknown_12 = 0x12,
+	Unknown_13 = 0x13,
+	Unknown_14 = 0x14,
+	Controls = 0x15,
+	BonusVideo = 0x16,
+	HowToPlay = 0x17,
+	Unknown_18 = 0x18,
+};
+
+export const enum Levels {
 	BasicTest,
 	KnucklesTest,
 	SonicTest,
@@ -245,12 +328,20 @@ export interface IGlobalContext {
 	current_frame_count: number;
 	game_paused: boolean;
 	current_level: number;
+	game_state: GameStates;
+	current_menu: Menus;
 }
 export interface ISA2BHelper {
-
+	isLevelNumberValid(): boolean;
+	isPlayerEnteringLoadingZone(): boolean;
+	isInGame(): boolean;
+	isTitleScreen(): boolean;
+	isMenuSafe(): boolean;
+	isPaused(): boolean;
 }
 
-export interface ISA2B extends ICore, API.Common.ISACommonCore {
+
+export interface ISA2BCore extends ICore, API.Common.ISACommonCore {
 	sonic: API.SA2B.ISonic;
 	chao: API.ChaoAPI.IChaoGarden;
 	save: API.SA2B.ISaveContext;
@@ -259,5 +350,7 @@ export interface ISA2B extends ICore, API.Common.ISACommonCore {
 }
 
 export enum SA2BEvents {
-	ON_SCENE_CHANGE = 'onSceneChange',
+	ON_LEVEL_CHANGE = 'onLevelChange',
+	ON_LOADING_ZONE = 'onLoadingZone',
+	ON_SAVE_LOADED = 'onSaveLoaded',
 }

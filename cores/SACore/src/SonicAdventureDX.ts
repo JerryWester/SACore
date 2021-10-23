@@ -8,8 +8,9 @@ import * as API from '../API/imports';
 import { ChaoGarden } from "./Common/Chao/ChaoGarden";
 import { SaveContext } from "./SADX/SaveContext";
 import { GlobalContext } from "./SADX/GlobalContext";
+import { SADXHelper } from "./SADX/SADXHelper";
 
-export class SonicAdventureDX implements ICore, API.SADX.ISADX, API.Common.ISACommonCore {
+export class SonicAdventureDX implements ICore, API.SADX.ISADXCore, API.Common.ISACommonCore {
     header = [ROMHeaders.SADX_GC];
     @ModLoaderAPIInject()
     ModLoader: IModLoaderAPI = {} as IModLoaderAPI;
@@ -39,7 +40,12 @@ export class SonicAdventureDX implements ICore, API.SADX.ISADX, API.Common.ISACo
         this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger, this.chao_data);
         this.save = new SaveContext(this.ModLoader, this.ModLoader.logger);
         this.global = new GlobalContext(this.ModLoader, this.ModLoader.logger);;
-        this.helper;
+        this.helper = new SADXHelper(
+            this.save,
+            this.global,
+            this.sonic,
+            this.ModLoader.emulator
+        );
     }
 
     @onTick()

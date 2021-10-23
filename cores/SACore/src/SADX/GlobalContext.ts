@@ -1,4 +1,4 @@
-import { IGlobalContext } from "cores/SACore/API/SADX/SADX_API";
+import { IGlobalContext, Level } from "../..//API/SADX/SADX_API";
 import IMemory from "modloader64_api/IMemory";
 import { ILogger, IModLoaderAPI } from "modloader64_api/IModLoaderAPI";
 import { JSONTemplate } from "modloader64_api/JSONTemplate";
@@ -14,12 +14,15 @@ export class GlobalContext extends JSONTemplate implements IGlobalContext{
     }
 
     get global_frame_count(): number{
-        return this.ModLoader.emulator.rdramRead32(0x801CC1E0);
+        return this.ModLoader.emulator.rdramRead32(0x8074C7A4);
     }
     get current_frame_count(): number{
-        return this.ModLoader.emulator.rdramRead32(0x801CC1E4);
+        return this.ModLoader.emulator.rdramRead32(0x8074C7A0);
     }
-    get game_paused(): boolean{
-        return this.ModLoader.emulator.rdramRead8(0x801CC17F) === 1;
+    get current_level(): Level {
+        return this.ModLoader.emulator.rdramRead16(0x8074A7B7);
+    }
+    get game_state(): number{
+        return this.ModLoader.emulator.rdramRead16(0x8074A7BD);
     }
 }
