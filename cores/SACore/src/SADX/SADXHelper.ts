@@ -22,21 +22,29 @@ export class SADXHelper extends JSONTemplate implements API.SADX.ISADXHelper {
         this.emu = memory;
     }
 
-    // isLinkEnteringLoadingZone(): boolean {
-    //     let r = this.link.rawStateValue;
-    //     return (r & 0x000000ff) === 1;
-    // }
+    isPlayerEnteringLoadingZone(): boolean {
+        return this.emu.rdramRead16(this.global.game_state) === 0x16;
+    }
 
+    isDemoMode(): boolean {
+        return this.emu.rdramRead8(0x807A947B) === 1;
+    }
+    
     isInGame(): boolean {
-        return this.global.game_state === 0xF;
+        const safety = [API.SADX.GameModes.Adventure_Field, API.SADX.GameModes.Adventure_ActionStg, API.SADX.GameModes.Trial, API.SADX.GameModes.Mission]
+        return !this.isDemoMode() && safety.includes(this.global.game_mode) || (this.global.game_state === 0xF) || this.isPaused()
+    }
+
+    isInMenu(): boolean {
+        return this.global.game_mode === API.SADX.GameModes.Menu;
     }
 
     isTitleScreen(): boolean {
         return this.global.game_state === 0x15;
     }
-    
+
     isLevelNumberValid(): boolean {
-        return this.global.current_level <= 42;
+        return !this.isInMenu() && this.global.current_level <= 42 && this.global.current_level >= 1;
     }
 
     isPaused(): boolean {

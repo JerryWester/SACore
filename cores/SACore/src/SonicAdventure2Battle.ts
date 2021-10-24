@@ -141,6 +141,15 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
             }
             if (this.global.current_frame_count === 60) this.temp = false;
         });
+        this.eventTicks.set('waitingForMainMenu', () => {
+            //console.log(`current_frame_count: ${this.global.current_frame_count}`);
+            if (
+                this.helper.isMenuSafe() && !this.isSaveLoaded
+            ) {
+                this.isSaveLoaded = true;
+                bus.emit(SA2BEvents.ON_SAVE_LOADED, this.isSaveLoaded);
+            }
+        });
     }
 
     @Postinit()

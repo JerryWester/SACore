@@ -19,10 +19,13 @@ export class GlobalContext extends JSONTemplate implements IGlobalContext{
     get current_frame_count(): number{
         return this.ModLoader.emulator.rdramRead32(0x8074C7A0);
     }
-    get current_level(): Level {
-        return this.ModLoader.emulator.rdramRead16(0x8074A7B7);
+    get current_level(): number {
+        return this.ModLoader.emulator.rdramRead16(0x8074A7B6);
     }
     get game_state(): number{
-        return this.ModLoader.emulator.rdramRead16(0x8074A7BD);
+        return this.ModLoader.emulator.rdramRead16(0x8074A7BC);
+    }
+    get game_mode(): number {
+        return this.ModLoader.emulator.rdramRead8(0x8084593B);
     }
 }
