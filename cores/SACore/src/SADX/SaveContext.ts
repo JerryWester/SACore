@@ -3,37 +3,8 @@ import { JSONTemplate } from 'modloader64_api/JSONTemplate';
 import { ILogger, IModLoaderAPI } from 'modloader64_api/IModLoaderAPI';
 import * as API from "../../API/imports";
 import IMemory from 'modloader64_api/IMemory';
+import { Time } from '../Common/CommonClasses'
 import { FakeArray16, FakeArray32, FakeArray8, FakeArrayAdventureData, FakeArrayTime, FakeArrayTwinkleCircuitTimes, IFakeArray } from '../Common/types/FakeArray';
-
-export class Time extends JSONTemplate implements API.SADX.ITime {
-    private ModLoader: IModLoaderAPI;
-    private emulator: IMemory;
-    private instance: number;
-    private get minutes_addr() { return this.instance + 0x0; }
-    private get seconds_addr() { return this.instance + 0x1; }
-    private get frames_addr()  { return this.instance + 0x2; }
-
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
-        super();
-        this.ModLoader = ModLoader;
-        this.emulator = ModLoader.emulator;
-        this.instance = address;
-    }
-
-    jsonFields: string[] = [
-        'minutes',
-        'seconds',
-        'frames'
-    ];
-
-    get minutes() { return this.emulator.rdramRead8(this.minutes_addr); }
-    get seconds() { return this.emulator.rdramRead8(this.seconds_addr); }
-    get frames()  { return this.emulator.rdramRead8(this.frames_addr);  }
-
-    set minutes(num: number) { this.emulator.rdramWrite8(this.minutes_addr, num); }
-    set seconds(num: number) { this.emulator.rdramWrite8(this.seconds_addr, num); }
-    set frames(num: number)  { this.emulator.rdramWrite8(this.frames_addr,  num); }
-}
 
 export class TwinkleCircuitTimes extends JSONTemplate implements API.SADX.ITwinkleCircuitTimes {
     private ModLoader: IModLoaderAPI;
@@ -153,7 +124,7 @@ export class SaveContext extends JSONTemplate implements API.SADX.ISaveContext {
     private get metal_emblems_addr()                    { return this.instance + 0x56C; }
 
     high_scores: IFakeArray<number>;
-    best_times: IFakeArray<API.SADX.ITime>;
+    best_times: IFakeArray<API.Common.ITime>;
     best_weights: IFakeArray<number>;
     most_rings: IFakeArray<number>;
     sky_chase1_high_scores: IFakeArray<number>;
@@ -161,7 +132,7 @@ export class SaveContext extends JSONTemplate implements API.SADX.ISaveContext {
     ice_cap_high_scores: IFakeArray<number>;
     sand_hill_high_scores: IFakeArray<number>;
     twinkle_circuit_best_times: IFakeArray<API.SADX.ITwinkleCircuitTimes>;
-    boss_best_times: IFakeArray<API.SADX.ITime>;
+    boss_best_times: IFakeArray<API.Common.ITime>;
     emblems: IFakeArray<number>;
     lives: IFakeArray<number>;
     // event_flags: IFakeArray<number>;
@@ -170,11 +141,11 @@ export class SaveContext extends JSONTemplate implements API.SADX.ISaveContext {
     level_clear: IFakeArray<number>;
     mission_flags: IFakeArray<number>;
     metal_high_scores: IFakeArray<number>;
-    metal_best_times: IFakeArray<API.SADX.ITime>;
+    metal_best_times: IFakeArray<API.Common.ITime>;
     metal_most_rings: IFakeArray<number>;
     metal_ice_cap_high_scores: IFakeArray<number>;
     metal_sand_hill_high_scores: IFakeArray<number>;
-    metal_boss_best_times: IFakeArray<API.SADX.ITime>;
+    metal_boss_best_times: IFakeArray<API.Common.ITime>;
 
     constructor(ModLoader: IModLoaderAPI, log: ILogger) {
         super();

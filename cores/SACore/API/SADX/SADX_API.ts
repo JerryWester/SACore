@@ -193,16 +193,10 @@ export enum GameModes
 	Credits,
 };
 
-export interface ITime {
-  /* 0x0 */ minutes: number; // 0x1
-  /* 0x1 */ seconds: number; // 0x1
-  /* 0x2 */ frames: number; // 0x1
-}
-
 export interface ITwinkleCircuitTimes {
-	/* 0x0 */ best_times: IFakeArray<ITime>; // 3 * 0x3; 0x9
-	/* 0x9 */ lap1_time: ITime; // 0x3
-	/* 0xC */ lap2_time: ITime; // 0x3
+	/* 0x0 */ best_times: IFakeArray<API.Common.ITime>; // 3 * 0x3; 0x9
+	/* 0x9 */ lap1_time: API.Common.ITime; // 0x3
+	/* 0xC */ lap2_time: API.Common.ITime; // 0x3
 }
 
 export interface IAdventureData {
@@ -219,7 +213,7 @@ export interface ISaveContext {
   /* 0x000 */ checksum: number; // 0x4
   /* 0x004 */ play_time: number; // 0x4
   /* 0x008 */ high_scores: IFakeArray<number>; // 32 * 0x4; 0x80
-  /* 0x088 */ best_times: IFakeArray<ITime>; // 28 * 0x3; 0x54
+  /* 0x088 */ best_times: IFakeArray<API.Common.ITime>; // 28 * 0x3; 0x54
   /* 0x0DC */ best_weights: IFakeArray<number>; // 12 * 0x2; 0x18
   /* 0x0F4 */ anonymous_4: Buffer; // 0x10
   /* 0x104 */ most_rings: IFakeArray<number>; // 32 * 0x2; 0x40
@@ -231,7 +225,7 @@ export interface ISaveContext {
   /* 0x1A8 */ hedgehog_hammer_high_score2: number; // 0x4
   /* 0x1AC */ hedgehog_hammer_high_score3: number; // 0x4
   /* 0x1B0 */ twinkle_circuit_best_times: IFakeArray<ITwinkleCircuitTimes>; // 6 * 0xF; 0x5A
-  /* 0x20A */ boss_best_times: IFakeArray<ITime>; // 18 * 0x3; 0x36
+  /* 0x20A */ boss_best_times: IFakeArray<API.Common.ITime>; // 18 * 0x3; 0x36
   /* 0x240 */ emblems: IFakeArray<number>; // 17 * 0x1; 0x11
   /* 0x251 */ options: number; // 0x1
   /* 0x252 */ lives: IFakeArray<number>; // 7 * 0x1; 0x7
@@ -248,13 +242,13 @@ export interface ISaveContext {
   /* 0x4A0 */ mission_flags: IFakeArray<number>; // 60 * 0x1; 0x3C
   /* 0x4DC */ black_market_rings: number; // 0x4
   /* 0x4E0 */ metal_high_scores: IFakeArray<number>; // 10 * 0x4; 0x28
-  /* 0x508 */ metal_best_times: IFakeArray<ITime>; // 10 * 0x3; 0x1E
+  /* 0x508 */ metal_best_times: IFakeArray<API.Common.ITime>; // 10 * 0x3; 0x1E
   /* 0x526 */ metal_most_rings: IFakeArray<number>; // 10 * 0x2; 0x14
   /* 0x53A */ gap_53a: Buffer; // 0x2
   /* 0x53C */ metal_ice_cap_high_scores: IFakeArray<number>; // 3 * 0x4; 0xC
   /* 0x548 */ metal_sand_hill_high_scores: IFakeArray<number>; // 3 * 0x4; 0xC
   /* 0x554 */ metal_twinkle_circuit_best_times: ITwinkleCircuitTimes; // 0xF
-  /* 0x563 */ metal_boss_best_times: IFakeArray<ITime>; // 3 * 0x3; 0x9
+  /* 0x563 */ metal_boss_best_times: IFakeArray<API.Common.ITime>; // 3 * 0x3; 0x9
   /* 0x56C */ metal_emblems: number; // 0x4
 }
 

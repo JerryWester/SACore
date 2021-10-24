@@ -1,3 +1,4 @@
+import { IFakeArray } from '../../src/Common/types/FakeArray';
 import { ICore } from 'modloader64_api/IModLoaderAPI';
 import { IPosition } from '../Common/Utils/IPosition';
 import { IRotation } from '../Common/Utils/IRotation';
@@ -320,9 +321,82 @@ export interface ISonic {
 	rotation: IRotation;
 }
 
+export interface ISaveBossInfo
+{
+	/* 0x00 */ time1: API.Common.ITime; // 0x3
+	/* 0x03 */ field_3: Buffer; // 0x9
+	/* 0x0C */ time2: API.Common.ITime; // 0x3
+	/* 0x0F */ field_F: Buffer; // 0x9
+	/* 0x18 */ time3: API.Common.ITime; // 0x3
+	/* 0x1B */ field_1B: Buffer; // 0x91
+	/* 0xAC */ emblem: number; // 0x1
+};
+
+export interface ISaveLevelScore
+{
+	/* 0x0 */ rings: number; // 0x2
+	/* 0x2 */ field_2: number; // 0x2
+	/* 0x4 */ score: number; // 0x4
+	/* 0x8 */ time: API.Common.ITime; // 0x3
+	/* 0xB */ field_B: number; // 0x1
+};
+
+export interface ISaveLevelInfo
+{
+	/* 0x00 */ ranks: IFakeArray<number>; // 6 * 0x1; 0x6
+	/* 0x06 */ play_counts: IFakeArray<number>; // 5 * 0x2; 0xA
+	/* 0x10 */ scores: IFakeArray<ISaveLevelScore>; // 15 * 0xC; 0xB4
+};
+
+export interface ISaveKartTime
+{
+	/* 0x0 */ time: API.Common.ITime; // 0x3
+	/* 0x3 */ character: number; // 0x1
+};
+
+export interface ISaveKartInfo
+{
+	/* 0x0 */ times: IFakeArray<ISaveKartTime>; // 3 * 0x4; 0xC
+	/* 0xC */ emblem: number; // 0x1
+};
+
 export interface ISaveContext {
-	rings: number;
+	/* 0x0000 */ checksum: number; // 0x4
+	/* 0x0004 */ dword_1DEC604: number; // 0x4
+	/* 0x0008 */ anonymous_0: number; // 0x1
+	/* 0x0009 */ anonymous_1: number; // 0x1
+	/* 0x000A */ anonymous_2: number; // 0x1
+	/* 0x000B */ anonymous_3: number; // 0x1
+	/* 0x000C */ anonymous_4: number; // 0x1
+	/* 0x000D */ anonymous_5: number; // 0x1
+	/* 0x000E */ emblem_count: number; // 0x1
+	/* 0x000F */ anonymous_6: number; // 0x1
+	/* 0x0010 */ last_character: number; // 0x1
+	/* 0x0011 */ last_level: number; // 0x1
+	/* 0x0012 */ anonymous_9: number; // 0x1
+	/* 0x0013 */ anonymous_10: number; // 0x1
+	/* 0x0014 */ gap_14: Buffer; // 0x8
+	/* 0x001C */ anonymous_11: number; // 0x2
+	/* 0x001E */ anonymous_12: number; // 0x2
+	/* 0x0020 */ anonymous_13: number; // 0x2
+	/* 0x0022 */ anonymous_14: number; // 0x2
+	/* 0x0024 */ dword_1DEC624: number; // 0x4
+	/* 0x0028 */ dword_1DEC628: number; // 0x4
+	/* 0x002C */ play_time: number; // 0x4
+	/* 0x0030 */ total_rings: number; // 0x4
+	/* 0x0034 */ dword_1DEC634: number; // 0x4
+	/* 0x0038 */ levels: IFakeArray<ISaveLevelInfo>; // 62 * 0xC4; 0x2F78
+	/* 0x2FB0 */ kart_race: IFakeArray<ISaveKartInfo>; // 3 * 0xD; 0x27
+	/* 0x2FD7 */ anonymous_80: number; // 0x1
+	/* 0x2FD8 */ anonymous_81: number; // 0x1
+	/* 0x2FD9 */ gap_2fd9: Buffer; // 0x17
+	/* 0x2FF0 */ hero_boss_attack: ISaveBossInfo; // 0xAD
+	/* 0x309D */ gap_309d: Buffer; // 0x17
+	/* 0x30B4 */ dark_boss_attack: ISaveBossInfo; // 0xAD
+	/* 0x3161 */ gap_3161: Buffer; // 0x17
+	/* 0x3178 */ all_boss_attack: ISaveBossInfo; // 0xAD
 }
+
 export interface IGlobalContext {
 	global_frame_count: number;
 	current_frame_count: number;

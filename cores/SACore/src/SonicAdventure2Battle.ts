@@ -155,14 +155,20 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
     @Postinit()
     postinit(): void {
         this.sonic;
-        this.save = new SaveContext(this.ModLoader, this.ModLoader.logger);
-        this.global = new GlobalContext(this.ModLoader, this.ModLoader.logger);;
+        this.save = new SaveContext(this.ModLoader, this.ModLoader.logger, 0x801F2340);
+        this.global = new GlobalContext(this.ModLoader, this.ModLoader.logger);
         this.helper = new SA2BHelper(
             this.save,
             this.global,
             this.sonic,
             this.ModLoader.emulator
         );
+
+       this.ModLoader.utils.setIntervalFrames(() => {
+
+               console.log(`Emblem Count: ${this.save.emblem_count}`);
+
+       }, 300);
     }
 
     @onTick()

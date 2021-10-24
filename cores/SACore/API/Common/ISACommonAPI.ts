@@ -11,3 +11,9 @@ export interface ISACommonCore extends ICore {
     helper: API.SADX.ISADXHelper | API.SA2B.ISA2BHelper;
     global: API.SADX.IGlobalContext | API.SA2B.IGlobalContext;
 }
+
+export interface ITime {
+  /* 0x0 */ minutes: number; // 0x1
+  /* 0x1 */ seconds: number; // 0x1
+  /* 0x2 */ frames: number; // 0x1
+}
