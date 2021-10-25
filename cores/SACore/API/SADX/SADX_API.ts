@@ -194,7 +194,7 @@ export enum GameModes
 };
 
 export interface ITwinkleCircuitTimes {
-	/* 0x0 */ best_times: IFakeArray<API.Common.ITime>; // 3 * 0x3; 0x9
+	/* 0x0 */ best_times: API.Common.ITime[]; // 3 * 0x3; 0x9
 	/* 0x9 */ lap1_time: API.Common.ITime; // 0x3
 	/* 0xC */ lap2_time: API.Common.ITime; // 0x3
 }
@@ -212,43 +212,43 @@ export interface IAdventureData {
 export interface ISaveContext {
   /* 0x000 */ checksum: number; // 0x4
   /* 0x004 */ play_time: number; // 0x4
-  /* 0x008 */ high_scores: IFakeArray<number>; // 32 * 0x4; 0x80
-  /* 0x088 */ best_times: IFakeArray<API.Common.ITime>; // 28 * 0x3; 0x54
-  /* 0x0DC */ best_weights: IFakeArray<number>; // 12 * 0x2; 0x18
+  /* 0x008 */ high_scores: number[]; // 32 * 0x4; 0x80
+  /* 0x088 */ best_times: API.Common.ITime[]; // 28 * 0x3; 0x54
+  /* 0x0DC */ best_weights: number[]; // 12 * 0x2; 0x18
   /* 0x0F4 */ anonymous_4: Buffer; // 0x10
-  /* 0x104 */ most_rings: IFakeArray<number>; // 32 * 0x2; 0x40
-  /* 0x144 */ sky_chase1_high_scores: IFakeArray<number>; // 6 * 0x4; 0x18
-  /* 0x15C */ sky_chase2_high_scores: IFakeArray<number>; // 6 * 0x4; 0x18
-  /* 0x174 */ ice_cap_high_scores: IFakeArray<number>; // 6 * 0x4; 0x18
-  /* 0x18C */ sand_hill_high_scores: IFakeArray<number>; // 6 * 0x4; 0x18
+  /* 0x104 */ most_rings: number[]; // 32 * 0x2; 0x40
+  /* 0x144 */ sky_chase1_high_scores: number[]; // 6 * 0x4; 0x18
+  /* 0x15C */ sky_chase2_high_scores: number[]; // 6 * 0x4; 0x18
+  /* 0x174 */ ice_cap_high_scores: number[]; // 6 * 0x4; 0x18
+  /* 0x18C */ sand_hill_high_scores: number[]; // 6 * 0x4; 0x18
   /* 0x1A4 */ hedgehog_hammer_high_score1: number; // 0x4
   /* 0x1A8 */ hedgehog_hammer_high_score2: number; // 0x4
   /* 0x1AC */ hedgehog_hammer_high_score3: number; // 0x4
-  /* 0x1B0 */ twinkle_circuit_best_times: IFakeArray<ITwinkleCircuitTimes>; // 6 * 0xF; 0x5A
-  /* 0x20A */ boss_best_times: IFakeArray<API.Common.ITime>; // 18 * 0x3; 0x36
-  /* 0x240 */ emblems: IFakeArray<number>; // 17 * 0x1; 0x11
+  /* 0x1B0 */ twinkle_circuit_best_times: ITwinkleCircuitTimes[]; // 6 * 0xF; 0x5A
+  /* 0x20A */ boss_best_times: API.Common.ITime[]; // 18 * 0x3; 0x36
+  /* 0x240 */ emblems: number[]; // 17 * 0x1; 0x11
   /* 0x251 */ options: number; // 0x1
-  /* 0x252 */ lives: IFakeArray<number>; // 7 * 0x1; 0x7
+  /* 0x252 */ lives: number[]; // 7 * 0x1; 0x7
   /* 0x259 */ last_character: number; // 0x1
   /* 0x25A */ rumble: number; // 0x1
   /* 0x25B */ gap_25b: Buffer; // 0x1
   /* 0x25C */ last_level: number; // 0x2
   /* 0x25E */ gap_25e: Buffer; // 0x2
   /* 0x260 */ event_flags: Buffer; // 64 * 0x1; 0x40
-  /* 0x2A0 */ npc_flags: IFakeArray<number>; // 64 * 0x1; 0x40
+  /* 0x2A0 */ npc_flags: number[]; // 64 * 0x1; 0x40
   /* 0x2E0 */ gap_2e0: Buffer; // 0x8
-  /* 0x2E8 */ adventure_data: IFakeArray<IAdventureData>; // 8 * 0xC; 0x60
-  /* 0x348 */ level_clear: IFakeArray<number>; // 344 * 0x1; 0x158
-  /* 0x4A0 */ mission_flags: IFakeArray<number>; // 60 * 0x1; 0x3C
+  /* 0x2E8 */ adventure_data: IAdventureData[]; // 8 * 0xC; 0x60
+  /* 0x348 */ level_clear: number[]; // 344 * 0x1; 0x158
+  /* 0x4A0 */ mission_flags: number[]; // 60 * 0x1; 0x3C
   /* 0x4DC */ black_market_rings: number; // 0x4
-  /* 0x4E0 */ metal_high_scores: IFakeArray<number>; // 10 * 0x4; 0x28
-  /* 0x508 */ metal_best_times: IFakeArray<API.Common.ITime>; // 10 * 0x3; 0x1E
-  /* 0x526 */ metal_most_rings: IFakeArray<number>; // 10 * 0x2; 0x14
+  /* 0x4E0 */ metal_high_scores: number[]; // 10 * 0x4; 0x28
+  /* 0x508 */ metal_best_times: API.Common.ITime[]; // 10 * 0x3; 0x1E
+  /* 0x526 */ metal_most_rings: number[]; // 10 * 0x2; 0x14
   /* 0x53A */ gap_53a: Buffer; // 0x2
-  /* 0x53C */ metal_ice_cap_high_scores: IFakeArray<number>; // 3 * 0x4; 0xC
-  /* 0x548 */ metal_sand_hill_high_scores: IFakeArray<number>; // 3 * 0x4; 0xC
+  /* 0x53C */ metal_ice_cap_high_scores: number[]; // 3 * 0x4; 0xC
+  /* 0x548 */ metal_sand_hill_high_scores: number[]; // 3 * 0x4; 0xC
   /* 0x554 */ metal_twinkle_circuit_best_times: ITwinkleCircuitTimes; // 0xF
-  /* 0x563 */ metal_boss_best_times: IFakeArray<API.Common.ITime>; // 3 * 0x3; 0x9
+  /* 0x563 */ metal_boss_best_times: API.Common.ITime[]; // 3 * 0x3; 0x9
   /* 0x56C */ metal_emblems: number; // 0x4
 }
 

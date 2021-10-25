@@ -104,9 +104,9 @@ export class SaveLevelInfo extends JSONTemplate implements API.SA2B.ISaveLevelIn
     private get play_counts_addr() { return this.instance + 0x06; }
     private get scores_addr() { return this.instance + 0x10; }
 
-    ranks: IFakeArray<number>;
-    play_counts: IFakeArray<number>;
-    scores: IFakeArray<API.SA2B.ISaveLevelScore>;
+    ranks: number[] = [];
+    play_counts: number[] = [];
+    scores: API.SA2B.ISaveLevelScore[] = [];
 
     constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
         super();
@@ -114,9 +114,21 @@ export class SaveLevelInfo extends JSONTemplate implements API.SA2B.ISaveLevelIn
         this.emulator = ModLoader.emulator;
         this.instance = address;
 
-        this.ranks       = new FakeArray8(ModLoader, log, this.ranks_addr, 6);
-        this.play_counts = new FakeArray16(ModLoader, log, this.play_counts_addr, 5);
-        this.scores      = new FakeArraySaveLevelScore(ModLoader, log, this.scores_addr, 15);
+        for (let i = 0; i < 6; i++) {
+            Object.defineProperty(this.ranks, i, {
+                get() { return ModLoader.emulator.rdramRead8(address + 0x00 + i * 1); },
+                set(num: number) { ModLoader.emulator.rdramWrite8(address + 0x00 + i * 1, num); }
+            });
+        }
+        for (let i = 0; i < 5; i++) {
+            Object.defineProperty(this.play_counts, i, {
+                get() { return ModLoader.emulator.rdramRead16(address + 0x06 + i * 2); },
+                set(num: number) { ModLoader.emulator.rdramWrite16(address + 0x06 + i * 2, num); }
+            });
+        }
+        for (let i = 0; i < 15; i++) {
+            this.scores[i] = new SaveLevelScore(ModLoader, log, this.scores_addr + i * 0xC);
+        }
     }
 
     jsonFields: string[] = [
@@ -161,7 +173,7 @@ export class SaveKartInfo extends JSONTemplate implements API.SA2B.ISaveKartInfo
     private get times_addr()  { return this.instance + 0x0; }
     private get emblem_addr() { return this.instance + 0xC; }
 
-    times: IFakeArray<API.SA2B.ISaveKartTime>;
+    times: API.SA2B.ISaveKartTime[] = [];
 
     constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
         super();
@@ -169,7 +181,9 @@ export class SaveKartInfo extends JSONTemplate implements API.SA2B.ISaveKartInfo
         this.emulator = ModLoader.emulator;
         this.instance = address;
 
-        this.times = new FakeArraySaveKartTime(ModLoader, log, this.times_addr, 3);
+        for (let i = 0; i < 3; i++) {
+            this.times[i] = new SaveKartTime(ModLoader, log, this.times_addr + i * 3);
+        }
     }
 
     jsonFields: string[] = [
@@ -221,8 +235,8 @@ export class SaveContext extends JSONTemplate implements API.SA2B.ISaveContext {
     private get gap_3161_addr()         { return this.instance + 0x3161; }
     private get all_boss_attack_addr()  { return this.instance + 0x3178; }
 
-    kart_race: IFakeArray<API.SA2B.ISaveKartInfo>;
-    levels: IFakeArray<API.SA2B.ISaveLevelInfo>;
+    kart_race: API.SA2B.ISaveKartInfo[] = [];
+    levels: API.SA2B.ISaveLevelInfo[] = [];
     hero_boss_attack: API.SA2B.ISaveBossInfo;
     dark_boss_attack: API.SA2B.ISaveBossInfo;
     all_boss_attack: API.SA2B.ISaveBossInfo;
@@ -233,8 +247,12 @@ export class SaveContext extends JSONTemplate implements API.SA2B.ISaveContext {
         this.emulator = ModLoader.emulator;
         this.instance = address;
 
-        this.kart_race = new FakeArraySaveKartInfo(ModLoader, log, this.kart_race_addr, 3);
-        this.levels = new FakeArraySaveLevelInfo(ModLoader, log, this.levels_addr, 64);
+        for (let i = 0; i < 3; i++) {
+            this.kart_race[i] = new SaveKartInfo(ModLoader, log, this.kart_race_addr + i * 0xD);
+        }
+        for (let i = 0; i < 64; i++) {
+            this.levels[i] = new SaveLevelInfo(ModLoader, log, this.levels_addr + i * 0xC4);
+        }
         this.hero_boss_attack = new SaveBossInfo(ModLoader, log, this.hero_boss_attack_addr);
         this.dark_boss_attack = new SaveBossInfo(ModLoader, log, this.dark_boss_attack_addr);
         this.all_boss_attack = new SaveBossInfo(ModLoader, log, this.all_boss_attack_addr);

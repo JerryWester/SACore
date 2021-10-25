@@ -12,20 +12,18 @@ const enum GameBondOffset {
 class ChaoCharacterBond extends JSONTemplate implements ChaoAPI.IChaoCharacterBond {
     private ModLoader: IModLoaderAPI;
     private emulator: IMemory;
-    private instance: number;
-    private slot: number;
+    private instance: [number];
     private game: GameBondOffset;
     private character: ChaoAPI.SADXCharacters | ChaoAPI.SA2BCharacters;
-    private get a_addr()       { return this.instance + (this.slot * 0x800) + (this.character * 6) + this.game; }
-    private get b_addr()       { return this.instance + (this.slot * 0x800) + (this.character * 6) + this.game; }
-    private get unknown_addr() { return this.instance + (this.slot * 0x800) + (this.character * 6) + this.game; }
+    private get a_addr()       { return this.instance[0] + (this.character * 6) + this.game; }
+    private get b_addr()       { return this.instance[0] + (this.character * 6) + this.game; }
+    private get unknown_addr() { return this.instance[0] + (this.character * 6) + this.game; }
 
-    constructor(ModLoader: IModLoaderAPI, slot: number, game: GameBondOffset, character: ChaoAPI.SADXCharacters | ChaoAPI.SA2BCharacters) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number], game: GameBondOffset, character: ChaoAPI.SADXCharacters | ChaoAPI.SA2BCharacters) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
-        this.instance = current_game.chao_data;
-        this.slot = slot;
+        this.instance = address;
         this.game = game;
         this.character = character;
     }
@@ -53,15 +51,15 @@ export class SADXCharacterBonds extends JSONTemplate implements ChaoAPI.ISADXCha
     gamma: ChaoAPI.IChaoCharacterBond;
     big: ChaoAPI.IChaoCharacterBond;
 
-    constructor(ModLoader: IModLoaderAPI, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number]) {
         super();
 
-        this.sonic    = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SADX, ChaoAPI.SADXCharacters.SONIC);
-        this.tails    = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SADX, ChaoAPI.SADXCharacters.TAILS);
-        this.knuckles = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SADX, ChaoAPI.SADXCharacters.KNUCKLES);
-        this.amy      = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SADX, ChaoAPI.SADXCharacters.AMY);
-        this.gamma    = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SADX, ChaoAPI.SADXCharacters.GAMMA);
-        this.big      = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SADX, ChaoAPI.SADXCharacters.BIG);
+        this.sonic    = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SADX, ChaoAPI.SADXCharacters.SONIC);
+        this.tails    = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SADX, ChaoAPI.SADXCharacters.TAILS);
+        this.knuckles = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SADX, ChaoAPI.SADXCharacters.KNUCKLES);
+        this.amy      = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SADX, ChaoAPI.SADXCharacters.AMY);
+        this.gamma    = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SADX, ChaoAPI.SADXCharacters.GAMMA);
+        this.big      = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SADX, ChaoAPI.SADXCharacters.BIG);
     }
 
     jsonFields: string[] = [
@@ -82,15 +80,15 @@ export class SA2BCharacterBonds extends JSONTemplate implements ChaoAPI.ISA2BCha
     knuckles: ChaoAPI.IChaoCharacterBond;
     rouge: ChaoAPI.IChaoCharacterBond;
 
-    constructor(ModLoader: IModLoaderAPI, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number]) {
         super();
 
-        this.sonic    = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.SONIC);
-        this.shadow   = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.SHADOW);
-        this.tails    = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.TAILS);
-        this.eggman   = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.EGGMAN);
-        this.knuckles = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.KNUCKLES);
-        this.rouge    = new ChaoCharacterBond(ModLoader, slot, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.ROUGE);
+        this.sonic    = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.SONIC);
+        this.shadow   = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.SHADOW);
+        this.tails    = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.TAILS);
+        this.eggman   = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.EGGMAN);
+        this.knuckles = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.KNUCKLES);
+        this.rouge    = new ChaoCharacterBond(ModLoader, log, address, GameBondOffset.SA2B, ChaoAPI.SA2BCharacters.ROUGE);
     }
 
     jsonFields: string[] = [

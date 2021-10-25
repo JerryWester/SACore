@@ -158,7 +158,7 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
             this.sonic,
             this.ModLoader.emulator
         );
-        this.chao = new ChaoGarden(this.ModLoader);
+        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger);
         //this.ModLoader.utils.setIntervalFrames(() => {
 
         //        console.log(`Emblem Count: ${this.save.emblem_count}`);
@@ -174,7 +174,7 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
             });
         }
         if (this.helper.isInGame() && this.global.current_level === 90) {
-            current_game.chao_data = (this.ModLoader.emulator.rdramRead32(0x803AD80C) + 0x48E4); //Chao instance
+            this.chao.instance = (this.ModLoader.emulator.rdramRead32(0x803AD80C) + 0x48E4); //Chao instance
         }
 
     }

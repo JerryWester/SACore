@@ -91,7 +91,7 @@ export class SonicAdventureDX implements ICore, API.SADX.ISADXCore, API.Common.I
             this.sonic,
             this.ModLoader.emulator
         );
-        this.chao = new ChaoGarden(this.ModLoader);
+        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger);
         this.ModLoader.utils.setIntervalFrames(() => {
             //console.log('--------------------------------------------');
             //console.log(`black_market_rings: ${this.save.black_market_rings}`);

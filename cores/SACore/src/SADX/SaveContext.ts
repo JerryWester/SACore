@@ -9,16 +9,26 @@ import { FakeArray16, FakeArray32, FakeArray8, FakeArrayAdventureData, FakeArray
 export class TwinkleCircuitTimes extends JSONTemplate implements API.SADX.ITwinkleCircuitTimes {
     private ModLoader: IModLoaderAPI;
     private emulator: IMemory;
-    private instance: number;
+    instance: number;
     private get best_times_addr() { return this.instance + 0x0; }
     private get lap1_time_addr()  { return this.instance + 0x9; }
     private get lap2_time_addr()  { return this.instance + 0xC; }
+
+    best_times: API.Common.ITime[] = [];
+    lap1_time: API.Common.ITime;
+    lap2_time: API.Common.ITime;
 
     constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
         this.instance = address;
+
+        for (let i = 0; i < 3; i++) {
+            this.best_times[i] = new Time(ModLoader, log, this.best_times_addr);
+        }
+        this.lap1_time = new Time(ModLoader, log, this.lap1_time_addr);
+        this.lap2_time = new Time(ModLoader, log, this.lap2_time_addr);
     }
 
     jsonFields: string[] = [
@@ -26,16 +36,12 @@ export class TwinkleCircuitTimes extends JSONTemplate implements API.SADX.ITwink
         'lap1_time',
         'lap2_time'
     ];
-
-    get best_times() { return new FakeArrayTime(this.ModLoader, this.ModLoader.logger, this.best_times_addr, 3); }
-    get lap1_time()  { return new Time(this.ModLoader,          this.ModLoader.logger, this.lap1_time_addr);     }
-    get lap2_time()  { return new Time(this.ModLoader,          this.ModLoader.logger, this.lap2_time_addr);     }
 }
 
 export class AdventureData extends JSONTemplate implements API.SADX.IAdventureData {
     private ModLoader: IModLoaderAPI;
     private emulator: IMemory;
-    private instance: number;
+    instance: number;
     private get time_of_day_addr() { return this.instance + 0x0; }
     private get field_1_addr()     { return this.instance + 0x1; }
     private get field_2_addr()     { return this.instance + 0x2; }
@@ -81,7 +87,7 @@ export class AdventureData extends JSONTemplate implements API.SADX.IAdventureDa
 export class SaveContext extends JSONTemplate implements API.SADX.ISaveContext {
     private ModLoader: IModLoaderAPI;
     private emulator: IMemory;
-    private instance: number = 0x807A83EC;
+    instance: number;
     private get checksum_addr()                         { return this.instance + 0x000; }
     private get play_time_addr()                        { return this.instance + 0x004; }
     private get high_scores_addr()                      { return this.instance + 0x008; }
@@ -123,58 +129,150 @@ export class SaveContext extends JSONTemplate implements API.SADX.ISaveContext {
     private get metal_boss_best_times_addr()            { return this.instance + 0x563; }
     private get metal_emblems_addr()                    { return this.instance + 0x56C; }
 
-    high_scores: IFakeArray<number>;
-    best_times: IFakeArray<API.Common.ITime>;
-    best_weights: IFakeArray<number>;
-    most_rings: IFakeArray<number>;
-    sky_chase1_high_scores: IFakeArray<number>;
-    sky_chase2_high_scores: IFakeArray<number>;
-    ice_cap_high_scores: IFakeArray<number>;
-    sand_hill_high_scores: IFakeArray<number>;
-    twinkle_circuit_best_times: IFakeArray<API.SADX.ITwinkleCircuitTimes>;
-    boss_best_times: IFakeArray<API.Common.ITime>;
-    emblems: IFakeArray<number>;
-    lives: IFakeArray<number>;
-    // event_flags: IFakeArray<number>;
-    npc_flags: IFakeArray<number>;
-    adventure_data: IFakeArray<API.SADX.IAdventureData>;
-    level_clear: IFakeArray<number>;
-    mission_flags: IFakeArray<number>;
-    metal_high_scores: IFakeArray<number>;
-    metal_best_times: IFakeArray<API.Common.ITime>;
-    metal_most_rings: IFakeArray<number>;
-    metal_ice_cap_high_scores: IFakeArray<number>;
-    metal_sand_hill_high_scores: IFakeArray<number>;
-    metal_boss_best_times: IFakeArray<API.Common.ITime>;
+    high_scores: number[] = [];
+    best_times: API.Common.ITime[] = [];
+    best_weights: number[] = [];
+    most_rings: number[] = [];
+    sky_chase1_high_scores: number[] = [];
+    sky_chase2_high_scores: number[] = [];
+    ice_cap_high_scores: number[] = [];
+    sand_hill_high_scores: number[] = [];
+    twinkle_circuit_best_times: API.SADX.ITwinkleCircuitTimes[] = [];
+    boss_best_times: API.Common.ITime[] = [];
+    emblems: number[] = [];
+    lives: number[] = [];
+    // event_flags: number[] = [];
+    npc_flags: number[] = [];
+    adventure_data: API.SADX.IAdventureData[] = [];
+    level_clear: number[] = [];
+    mission_flags: number[] = [];
+    metal_high_scores: number[] = [];
+    metal_best_times: API.Common.ITime[] = [];
+    metal_most_rings: number[] = [];
+    metal_ice_cap_high_scores: number[] = [];
+    metal_sand_hill_high_scores: number[] = [];
+    metal_boss_best_times: API.Common.ITime[] = [];
 
-    constructor(ModLoader: IModLoaderAPI, log: ILogger) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, instance = 0x807A83EC) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
+        this.instance = instance
 
-        this.high_scores                 = new FakeArray32(ModLoader, log, this.high_scores_addr, 32);
-        this.best_times                  = new FakeArrayTime(ModLoader, log, this.best_times_addr, 28);
-        this.best_weights                = new FakeArray16(ModLoader, log, this.best_weights_addr, 12);
-        this.most_rings                  = new FakeArray16(ModLoader, log, this.most_rings_addr, 32);
-        this.sky_chase1_high_scores      = new FakeArray32(ModLoader, log, this.sky_chase1_high_scores_addr, 6);
-        this.sky_chase2_high_scores      = new FakeArray32(ModLoader, log, this.sky_chase2_high_scores_addr, 6);
-        this.ice_cap_high_scores         = new FakeArray32(ModLoader, log, this.ice_cap_high_scores_addr, 6);
-        this.sand_hill_high_scores       = new FakeArray32(ModLoader, log, this.sand_hill_high_scores_addr, 6);
-        this.twinkle_circuit_best_times  = new FakeArrayTwinkleCircuitTimes(ModLoader, log, this.twinkle_circuit_best_times_addr, 6);
-        this.boss_best_times             = new FakeArrayTime(ModLoader, log, this.boss_best_times_addr, 18);
-        this.emblems                     = new FakeArray8(ModLoader, log, this.emblems_addr, 17);
-        this.lives                       = new FakeArray8(ModLoader, log, this.lives_addr, 7);
-        // this.event_flags                 = new FakeArray8(ModLoader, log, this.event_flags_addr, 64);
-        this.npc_flags                   = new FakeArray8(ModLoader, log, this.npc_flags_addr, 64);
-        this.adventure_data              = new FakeArrayAdventureData(ModLoader, log, this.adventure_data_addr, 8);
-        this.level_clear                 = new FakeArray8(ModLoader, log, this.level_clear_addr, 344);
-        this.mission_flags               = new FakeArray8(ModLoader, log, this.mission_flags_addr, 60);
-        this.metal_high_scores           = new FakeArray32(ModLoader, log, this.metal_high_scores_addr, 10);
-        this.metal_best_times            = new FakeArrayTime(ModLoader, log, this.metal_best_times_addr, 10);
-        this.metal_most_rings            = new FakeArray16(ModLoader, log, this.metal_most_rings_addr, 10);
-        this.metal_ice_cap_high_scores   = new FakeArray32(ModLoader, log, this.metal_ice_cap_high_scores_addr, 3)
-        this.metal_sand_hill_high_scores = new FakeArray32(ModLoader, log, this.metal_sand_hill_high_scores_addr, 3)
-        this.metal_boss_best_times       = new FakeArrayTime(ModLoader, log, this.metal_boss_best_times_addr, 3);
+        for (let i = 0; i < 32; i++) {
+            Object.defineProperty(this.high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x008 + 4 * i); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x008 + 4 * i, num); }
+            })
+        }
+        for (let i = 0; i < 12; i++) {
+            Object.defineProperty(this.best_weights, i, {
+                get() { return ModLoader.emulator.rdramRead16(instance + 0x0DC + i * 2); },
+                set(num: number) { ModLoader.emulator.rdramWrite16(instance + 0x0DC + i * 2, num); }
+            })
+        }
+        for (let i = 0; i < 32; i++) {
+            Object.defineProperty(this.most_rings, i, {
+                get() { return ModLoader.emulator.rdramRead16(instance + 0x104 + i * 2); },
+                set(num: number) { ModLoader.emulator.rdramWrite16(instance + 0x104 + i * 2, num); }
+            })
+        }
+        for (let i = 0; i < 6; i++) {
+            Object.defineProperty(this.sky_chase1_high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x144 + i * 4); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x144 + i * 4, num); }
+            })
+        }
+        for (let i = 0; i < 6; i++) {
+            Object.defineProperty(this.sky_chase2_high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x15C + i * 4); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x15C + i * 4, num); }
+            })
+        }
+        for (let i = 0; i < 6; i++) {
+            Object.defineProperty(this.ice_cap_high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x174 + i * 4); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x174 + i * 4, num); }
+            })
+        }
+        for (let i = 0; i < 6; i++) {
+            Object.defineProperty(this.sand_hill_high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x18C + i * 4); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x18C + i * 4, num); }
+            })
+        }
+        for (let i = 0; i < 17; i++) {
+            Object.defineProperty(this.emblems, i, {
+                get() { return ModLoader.emulator.rdramRead8(instance + 0x240 + i * 1); },
+                set(num: number) { ModLoader.emulator.rdramWrite8(instance + 0x240 + i * 1, num); }
+            })
+        }
+        for (let i = 0; i < 7; i++) {
+            Object.defineProperty(this.lives, i, {
+                get() { return ModLoader.emulator.rdramRead8(instance + 0x252 + i * 1); },
+                set(num: number) { ModLoader.emulator.rdramWrite8(instance + 0x252 + i * 1, num); }
+            })
+        }
+        for (let i = 0; i < 64; i++) {
+            Object.defineProperty(this.npc_flags, i, {
+                get() { return ModLoader.emulator.rdramRead8(instance + 0x2A0 + i * 1); },
+                set(num: number) { ModLoader.emulator.rdramWrite8(instance + 0x2A0 + i * 1, num); }
+            })
+        }
+        for (let i = 0; i < 344; i++) {
+            Object.defineProperty(this.level_clear, i, {
+                get() { return ModLoader.emulator.rdramRead8(instance + 0x348 + i * 1); },
+                set(num: number) { ModLoader.emulator.rdramWrite8(instance + 0x348 + i * 1, num); }
+            })
+        }
+        for (let i = 0; i < 60; i++) {
+            Object.defineProperty(this.mission_flags, i, {
+                get() { return ModLoader.emulator.rdramRead8(instance + 0x4A0 + i * 1); },
+                set(num: number) { ModLoader.emulator.rdramWrite8(instance + 0x4A0 + i * 1, num); }
+            })
+        }
+        for (let i = 0; i < 10; i++) {
+            Object.defineProperty(this.metal_high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x4E0 + i * 4); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x4E0 + i * 4, num); }
+            })
+        }
+        for (let i = 0; i < 10; i++) {
+            Object.defineProperty(this.metal_most_rings, i, {
+                get() { return ModLoader.emulator.rdramRead16(instance + 0x526 + i * 2); },
+                set(num: number) { ModLoader.emulator.rdramWrite16(instance + 0x526 + i * 2, num); }
+            })
+        }
+        for (let i = 0; i < 3; i++) {
+            Object.defineProperty(this.metal_ice_cap_high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x53C + i * 4); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x53C + i * 4, num); }
+            })
+        }
+        for (let i = 0; i < 3; i++) {
+            Object.defineProperty(this.metal_sand_hill_high_scores, i, {
+                get() { return ModLoader.emulator.rdramRead32(instance + 0x548 + i * 4); },
+                set(num: number) { ModLoader.emulator.rdramWrite32(instance + 0x548 + i * 4, num); }
+            })
+        }
+        for (let i = 0; i < 28; i++) {
+            this.best_times[i] = new Time(ModLoader, log, this.best_times_addr)
+        }
+        for (let i = 0; i < 6; i++) {
+            this.twinkle_circuit_best_times[i] = new TwinkleCircuitTimes(ModLoader, log, this.twinkle_circuit_best_times_addr)
+        }
+        for (let i = 0; i < 18; i++) {
+            this.boss_best_times[i] = new Time(ModLoader, log, this.boss_best_times_addr)
+        }
+        for (let i = 0; i < 8; i++) {
+            this.adventure_data[i] = new AdventureData(ModLoader, log, this.adventure_data_addr)
+        }
+        for (let i = 0; i < 10; i++) {
+            this.metal_best_times[i] = new Time(ModLoader, log, this.metal_best_times_addr)
+        }
+        for (let i = 0; i < 3; i++) {
+            this.metal_boss_best_times[i] = new Time(ModLoader, log, this.metal_boss_best_times_addr)
+        }
     }
 
     jsonFields: string[] = [

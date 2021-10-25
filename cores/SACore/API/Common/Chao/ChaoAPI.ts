@@ -926,7 +926,6 @@ export interface IChaoData {
     /* 0x4EB */ unknown_type: SADXAnimal; // 0x1
     /* 0x4EC */ field_4EC: Buffer; // 0x10
     /* 0x4FC */ sadx_character_bonds: ISADXCharacterBonds; // 0x24
-    pointer: number;
 }
 
 export interface IAnimal {
@@ -957,6 +956,7 @@ export interface IBlackMarketItem {
 }
 
 export interface IChaoGarden {
+    instance: number;
     chaos: IChaoData[];
     animals: IAnimal[];
     fruits: IFruit[];

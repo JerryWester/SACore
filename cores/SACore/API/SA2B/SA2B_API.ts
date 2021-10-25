@@ -343,9 +343,9 @@ export interface ISaveLevelScore
 
 export interface ISaveLevelInfo
 {
-	/* 0x00 */ ranks: IFakeArray<number>; // 6 * 0x1; 0x6
-	/* 0x06 */ play_counts: IFakeArray<number>; // 5 * 0x2; 0xA
-	/* 0x10 */ scores: IFakeArray<ISaveLevelScore>; // 15 * 0xC; 0xB4
+	/* 0x00 */ ranks: number[]; // 6 * 0x1; 0x6
+	/* 0x06 */ play_counts: number[]; // 5 * 0x2; 0xA
+	/* 0x10 */ scores: ISaveLevelScore[]; // 15 * 0xC; 0xB4
 };
 
 export interface ISaveKartTime
@@ -356,7 +356,7 @@ export interface ISaveKartTime
 
 export interface ISaveKartInfo
 {
-	/* 0x0 */ times: IFakeArray<ISaveKartTime>; // 3 * 0x4; 0xC
+	/* 0x0 */ times: ISaveKartTime[]; // 3 * 0x4; 0xC
 	/* 0xC */ emblem: number; // 0x1
 };
 
@@ -385,8 +385,8 @@ export interface ISaveContext {
 	/* 0x002C */ play_time: number; // 0x4
 	/* 0x0030 */ total_rings: number; // 0x4
 	/* 0x0034 */ dword_1DEC634: number; // 0x4
-	/* 0x0038 */ levels: IFakeArray<ISaveLevelInfo>; // 62 * 0xC4; 0x2F78
-	/* 0x2FB0 */ kart_race: IFakeArray<ISaveKartInfo>; // 3 * 0xD; 0x27
+	/* 0x0038 */ levels: ISaveLevelInfo[]; // 62 * 0xC4; 0x2F78
+	/* 0x2FB0 */ kart_race: ISaveKartInfo[]; // 3 * 0xD; 0x27
 	/* 0x2FD7 */ anonymous_80: number; // 0x1
 	/* 0x2FD8 */ anonymous_81: number; // 0x1
 	/* 0x2FD9 */ gap_2fd9: Buffer; // 0x17

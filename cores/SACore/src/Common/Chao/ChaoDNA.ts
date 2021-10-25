@@ -7,48 +7,46 @@ import IMemory from 'modloader64_api/IMemory';
 export class ChaoDNA extends JSONTemplate implements ChaoAPI.IChaoDNA {
     private ModLoader: IModLoaderAPI;
     private emulator: IMemory;
-    private instance: number;
-    private slot: number;
-    private get reset_trigger_addr()            { return this.instance + (this.slot * 0x800) + 0x438 + 0x00; }
-    private get field_1_addr()                  { return this.instance + (this.slot * 0x800) + 0x438 + 0x01; }
-    private get swim_stat_grade1_addr()         { return this.instance + (this.slot * 0x800) + 0x438 + 0x5C; }
-    private get swim_stat_grade2_addr()         { return this.instance + (this.slot * 0x800) + 0x438 + 0x5D; }
-    private get fly_stat_grade1_addr()          { return this.instance + (this.slot * 0x800) + 0x438 + 0x5E; }
-    private get fly_stat_grade2_addr()          { return this.instance + (this.slot * 0x800) + 0x438 + 0x5F; }
-    private get run_stat_grade1_addr()          { return this.instance + (this.slot * 0x800) + 0x438 + 0x60; }
-    private get run_stat_grade2_addr()          { return this.instance + (this.slot * 0x800) + 0x438 + 0x61; }
-    private get power_stat_grade1_addr()        { return this.instance + (this.slot * 0x800) + 0x438 + 0x62; }
-    private get power_stat_grade2_addr()        { return this.instance + (this.slot * 0x800) + 0x438 + 0x63; }
-    private get stamina_stat_grade1_addr()      { return this.instance + (this.slot * 0x800) + 0x438 + 0x64; }
-    private get stamina_stat_grade2_addr()      { return this.instance + (this.slot * 0x800) + 0x438 + 0x65; }
-    private get luck_stat_grade1_addr()         { return this.instance + (this.slot * 0x800) + 0x438 + 0x66; }
-    private get luck_stat_grade2_addr()         { return this.instance + (this.slot * 0x800) + 0x438 + 0x67; }
-    private get intelligence_stat_grade1_addr() { return this.instance + (this.slot * 0x800) + 0x438 + 0x68; }
-    private get intelligence_stat_grade2_addr() { return this.instance + (this.slot * 0x800) + 0x438 + 0x69; }
-    private get unknown_stat_grade1_addr()      { return this.instance + (this.slot * 0x800) + 0x438 + 0x6A; }
-    private get unknown_stat_grade2_addr()      { return this.instance + (this.slot * 0x800) + 0x438 + 0x6B; }
-    private get field_6C_addr()                 { return this.instance + (this.slot * 0x800) + 0x438 + 0x6C; }
-    private get favorite_fruit1_addr()          { return this.instance + (this.slot * 0x800) + 0x438 + 0x8E; }
-    private get favorite_fruit2_addr()          { return this.instance + (this.slot * 0x800) + 0x438 + 0x8F; }
-    private get field_90_addr()                 { return this.instance + (this.slot * 0x800) + 0x438 + 0x90; }
-    private get color1_addr()                   { return this.instance + (this.slot * 0x800) + 0x438 + 0x94; }
-    private get color2_addr()                   { return this.instance + (this.slot * 0x800) + 0x438 + 0x95; }
-    private get monotone_flag1_addr()           { return this.instance + (this.slot * 0x800) + 0x438 + 0x96; }
-    private get monotone_flag2_addr()           { return this.instance + (this.slot * 0x800) + 0x438 + 0x97; }
-    private get texture1_addr()                 { return this.instance + (this.slot * 0x800) + 0x438 + 0x98; }
-    private get texture2_addr()                 { return this.instance + (this.slot * 0x800) + 0x438 + 0x99; }
-    private get shiny_flag1_addr()              { return this.instance + (this.slot * 0x800) + 0x438 + 0x9A; }
-    private get shiny_flag2_addr()              { return this.instance + (this.slot * 0x800) + 0x438 + 0x9B; }
-    private get egg_color1_addr()               { return this.instance + (this.slot * 0x800) + 0x438 + 0x9C; }
-    private get egg_color2_addr()               { return this.instance + (this.slot * 0x800) + 0x438 + 0x9D; }
-    private get gap_9E_addr()                   { return this.instance + (this.slot * 0x800) + 0x438 + 0x9E; }
+    private instance: [number];
+    private get reset_trigger_addr()            { return this.instance[0] + 0x438 + 0x00; }
+    private get field_1_addr()                  { return this.instance[0] + 0x438 + 0x01; }
+    private get swim_stat_grade1_addr()         { return this.instance[0] + 0x438 + 0x5C; }
+    private get swim_stat_grade2_addr()         { return this.instance[0] + 0x438 + 0x5D; }
+    private get fly_stat_grade1_addr()          { return this.instance[0] + 0x438 + 0x5E; }
+    private get fly_stat_grade2_addr()          { return this.instance[0] + 0x438 + 0x5F; }
+    private get run_stat_grade1_addr()          { return this.instance[0] + 0x438 + 0x60; }
+    private get run_stat_grade2_addr()          { return this.instance[0] + 0x438 + 0x61; }
+    private get power_stat_grade1_addr()        { return this.instance[0] + 0x438 + 0x62; }
+    private get power_stat_grade2_addr()        { return this.instance[0] + 0x438 + 0x63; }
+    private get stamina_stat_grade1_addr()      { return this.instance[0] + 0x438 + 0x64; }
+    private get stamina_stat_grade2_addr()      { return this.instance[0] + 0x438 + 0x65; }
+    private get luck_stat_grade1_addr()         { return this.instance[0] + 0x438 + 0x66; }
+    private get luck_stat_grade2_addr()         { return this.instance[0] + 0x438 + 0x67; }
+    private get intelligence_stat_grade1_addr() { return this.instance[0] + 0x438 + 0x68; }
+    private get intelligence_stat_grade2_addr() { return this.instance[0] + 0x438 + 0x69; }
+    private get unknown_stat_grade1_addr()      { return this.instance[0] + 0x438 + 0x6A; }
+    private get unknown_stat_grade2_addr()      { return this.instance[0] + 0x438 + 0x6B; }
+    private get field_6C_addr()                 { return this.instance[0] + 0x438 + 0x6C; }
+    private get favorite_fruit1_addr()          { return this.instance[0] + 0x438 + 0x8E; }
+    private get favorite_fruit2_addr()          { return this.instance[0] + 0x438 + 0x8F; }
+    private get field_90_addr()                 { return this.instance[0] + 0x438 + 0x90; }
+    private get color1_addr()                   { return this.instance[0] + 0x438 + 0x94; }
+    private get color2_addr()                   { return this.instance[0] + 0x438 + 0x95; }
+    private get monotone_flag1_addr()           { return this.instance[0] + 0x438 + 0x96; }
+    private get monotone_flag2_addr()           { return this.instance[0] + 0x438 + 0x97; }
+    private get texture1_addr()                 { return this.instance[0] + 0x438 + 0x98; }
+    private get texture2_addr()                 { return this.instance[0] + 0x438 + 0x99; }
+    private get shiny_flag1_addr()              { return this.instance[0] + 0x438 + 0x9A; }
+    private get shiny_flag2_addr()              { return this.instance[0] + 0x438 + 0x9B; }
+    private get egg_color1_addr()               { return this.instance[0] + 0x438 + 0x9C; }
+    private get egg_color2_addr()               { return this.instance[0] + 0x438 + 0x9D; }
+    private get gap_9E_addr()                   { return this.instance[0] + 0x438 + 0x9E; }
     
-    constructor(ModLoader: IModLoaderAPI, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number]) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
-        this.instance = current_game.chao_data;
-        this.slot = slot;
+        this.instance = address;
     }
 
     jsonFields: string[] = [

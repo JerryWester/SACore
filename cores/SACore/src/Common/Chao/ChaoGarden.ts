@@ -8,11 +8,11 @@ import { current_game } from '../../SACore';
 
 export class Animals extends JSONTemplate implements ChaoAPI.IAnimal {
     private emulator: IMemory;
-    private instance: number;
-    private get type_addr()   { return this.instance + 0x0; }
-    private get garden_addr() { return this.instance + 0x2; }
+    private instance: [number];
+    private get type_addr()   { return this.instance[0] + 0x0; }
+    private get garden_addr() { return this.instance[0] + 0x2; }
 
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number]) {
         super();
         this.emulator = ModLoader.emulator;
         this.instance = address
@@ -32,13 +32,13 @@ export class Animals extends JSONTemplate implements ChaoAPI.IAnimal {
 
 export class Fruit extends JSONTemplate implements ChaoAPI.IFruit {
     private emulator: IMemory;
-    private instance: number;
-    private get type_addr()   { return this.instance + 0x0; }
-    private get garden_addr() { return this.instance + 0x2; }
-    private get size_addr()   { return this.instance + 0x4; }
-    private get age_addr()    { return this.instance + 0x6; }
+    private instance: [number];
+    private get type_addr()   { return this.instance[0] + 0x0; }
+    private get garden_addr() { return this.instance[0] + 0x2; }
+    private get size_addr()   { return this.instance[0] + 0x4; }
+    private get age_addr()    { return this.instance[0] + 0x6; }
 
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number]) {
         super();
         this.emulator = ModLoader.emulator;
         this.instance = address
@@ -64,11 +64,11 @@ export class Fruit extends JSONTemplate implements ChaoAPI.IFruit {
 
 export class Seed extends JSONTemplate implements ChaoAPI.ISeed {
     private emulator: IMemory;
-    private instance: number;
-    private get type_addr()   { return this.instance + 0x0; }
-    private get garden_addr() { return this.instance + 0x2; }
+    private instance: [number];
+    private get type_addr()   { return this.instance[0] + 0x0; }
+    private get garden_addr() { return this.instance[0] + 0x2; }
 
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number]) {
         super();
         this.emulator = ModLoader.emulator;
         this.instance = address
@@ -88,14 +88,14 @@ export class Seed extends JSONTemplate implements ChaoAPI.ISeed {
 
 export class Hat extends JSONTemplate implements ChaoAPI.IHat {
     private emulator: IMemory;
-    private instance: number;
-    private get type_addr()   { return this.instance + 0x0; }
-    private get garden_addr() { return this.instance + 0x2; }
+    private instance: [number];
+    private get type_addr()   { return this.instance[0] + 0x0; }
+    private get garden_addr() { return this.instance[0] + 0x2; }
 
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: number) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address: [number]) {
         super();
         this.emulator = ModLoader.emulator;
-        this.instance = address
+        this.instance = address;
     }
 
     jsonFields: string[] = [
@@ -113,6 +113,10 @@ export class Hat extends JSONTemplate implements ChaoAPI.IHat {
 export class ChaoGarden extends JSONTemplate implements ChaoAPI.IChaoGarden {
     // private ModLoader: IModLoaderAPI;
     // private emulator: IMemory;
+    private _instance: [number];
+    get instance() { return this._instance[0]; }
+    set instance(num: number) { this.instance[0] = num; }
+
 
     chaos: ChaoAPI.IChaoData[];
     animals: ChaoAPI.IAnimal[];
@@ -121,10 +125,11 @@ export class ChaoGarden extends JSONTemplate implements ChaoAPI.IChaoGarden {
     seeds: ChaoAPI.ISeed[];
     black_market_items: ChaoAPI.IBlackMarketItem[];
 
-    constructor(ModLoader: IModLoaderAPI) {
+    constructor(ModLoader: IModLoaderAPI, log: ILogger, address?: [number]) {
         super();
         // this.ModLoader = ModLoader;
         // this.emulator = ModLoader.emulator;
+        this._instance = address || [0];
         this.chaos = [];
         this.animals = [];
         this.fruits = [];
@@ -133,13 +138,12 @@ export class ChaoGarden extends JSONTemplate implements ChaoAPI.IChaoGarden {
         this.black_market_items = [];
         
         for (let i = 0; i < 24; i++) {
-            this.chaos[i] = new ChaoData(ModLoader, i);
+            this.chaos[i] = new ChaoData(ModLoader, log, this._instance);
         }
         Object.seal(this.chaos);
     }
 
     jsonFields: string[] = [
-        'instance',
         'chaos',
         'animals',
         'fruits',
