@@ -6,132 +6,133 @@ import IMemory from 'modloader64_api/IMemory';
 import { ClassroomLessonFlags, SA2BAnimalFlags, SADXAnimalFlags, ToyFlags } from './ChaoFlags';
 import { SA2BCharacterBonds, SADXCharacterBonds } from './ChaoCharBonds';
 import { ChaoDNA } from './ChaoDNA';
+import { SupportedGames } from '../types/GameAliases';
 
 export class ChaoData extends JSONTemplate implements ChaoAPI.IChaoData {
     private ModLoader: IModLoaderAPI;
     private emulator: IMemory;
     private slot: number;
-    private chao_data = function() { return 0; };
-    get pointer() { return this.chao_data() + (this.slot * 0x800) }
-    private get gap_000_addr() { return this.chao_data() + (this.slot * 0x800) + 0x000; }
-    private get name_addr() { return this.chao_data() + (this.slot * 0x800) + 0x012; }
-    private get gap_019_addr() { return this.chao_data() + (this.slot * 0x800) + 0x019; }
-    private get swim_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x020; }
-    private get fly_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x021; }
-    private get run_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x022; }
-    private get power_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x023; }
-    private get stamina_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x024; }
-    private get lucky_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x025; }
-    private get intelligence_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x026; }
-    private get unknown_fraction_addr() { return this.chao_data() + (this.slot * 0x800) + 0x027; }
-    private get swim_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x028; }
-    private get fly_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x029; }
-    private get run_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x02A; }
-    private get power_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x02B; }
-    private get stamina_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x02C; }
-    private get lucky_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x02D; }
-    private get intelligence_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x02E; }
-    private get unknown_grade_addr() { return this.chao_data() + (this.slot * 0x800) + 0x02F; }
-    private get swim_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x030; }
-    private get fly_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x031; }
-    private get run_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x032; }
-    private get power_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x033; }
-    private get stamina_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x034; }
-    private get luck_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x035; }
-    private get intelligence_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x036; }
-    private get unknown_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x037; }
-    private get swim_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x038; }
-    private get fly_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x03A; }
-    private get run_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x03C; }
-    private get power_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x03E; }
-    private get stamina_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x040; }
-    private get luck_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x042; }
-    private get intelligence_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x044; }
-    private get unknown_stat_addr() { return this.chao_data() + (this.slot * 0x800) + 0x045; }
-    private get field_046_addr() { return this.chao_data() + (this.slot * 0x800) + 0x046; }
-    private get type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x080; }
-    private get garden_addr() { return this.chao_data() + (this.slot * 0x800) + 0x081; }
-    private get happiness_addr() { return this.chao_data() + (this.slot * 0x800) + 0x082; }
-    private get field_084_addr() { return this.chao_data() + (this.slot * 0x800) + 0x084; }
-    private get clock_rollovers_addr() { return this.chao_data() + (this.slot * 0x800) + 0x086; }
-    private get field_088_addr() { return this.chao_data() + (this.slot * 0x800) + 0x088; }
-    private get lifespan_addr() { return this.chao_data() + (this.slot * 0x800) + 0x08A; }
-    private get lifespan2_addr() { return this.chao_data() + (this.slot * 0x800) + 0x08C; }
-    private get reincarnations_addr() { return this.chao_data() + (this.slot * 0x800) + 0x08E; }
-    private get field_090_addr() { return this.chao_data() + (this.slot * 0x800) + 0x090; }
-    private get power_run_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0A8; }
-    private get fly_swim_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0AC; }
-    private get alignment_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0B0; }
-    private get gap_0B4_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0B4; }
-    private get evolution_progress_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0C0; }
-    private get gap_0C4_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0C4; }
-    private get eye_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D1; }
-    private get mouth_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D2; }
-    private get ball_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D3; }
-    private get gap_0D4_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D4; }
-    private get headgear_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D5; }
-    private get hide_feet_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D6; }
-    private get medal_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D7; }
-    private get color_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D8; }
-    private get monotone_highlights_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0D9; }
-    private get texture_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0DA; }
-    private get shiny_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0DB; }
-    private get egg_color_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0DC; }
-    private get body_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0DD; }
-    private get body_type_animal_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0DE; }
-    private get field_0DF_addr() { return this.chao_data() + (this.slot * 0x800) + 0x0DF; }
-    private get sa2b_arm_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x11C; }
-    private get sa2b_ear_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x11D; }
-    private get sa2b_forehead_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x11E; }
-    private get sa2b_horn_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x11F; }
-    private get sa2b_leg_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x120; }
-    private get sa2b_tail_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x121; }
-    private get sa2b_wing_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x122; }
-    private get sa2b_face_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x123; }
-    private get field_124_addr() { return this.chao_data() + (this.slot * 0x800) + 0x124; }
-    private get joy_addr() { return this.chao_data() + (this.slot * 0x800) + 0x12C; }
-    private get field_12D_addr() { return this.chao_data() + (this.slot * 0x800) + 0x12D; }
-    private get urge_to_cry_addr() { return this.chao_data() + (this.slot * 0x800) + 0x12E; }
-    private get fear_addr() { return this.chao_data() + (this.slot * 0x800) + 0x12F; }
-    private get field_130_addr() { return this.chao_data() + (this.slot * 0x800) + 0x130; }
-    private get dizziness_addr() { return this.chao_data() + (this.slot * 0x800) + 0x131; }
-    private get field_132_addr() { return this.chao_data() + (this.slot * 0x800) + 0x132; }
-    private get sleepiness_addr() { return this.chao_data() + (this.slot * 0x800) + 0x134; }
-    private get tiredness_addr() { return this.chao_data() + (this.slot * 0x800) + 0x136; }
-    private get hunger_addr() { return this.chao_data() + (this.slot * 0x800) + 0x138; }
-    private get mate_desire_addr() { return this.chao_data() + (this.slot * 0x800) + 0x13A; }
-    private get boredom_addr() { return this.chao_data() + (this.slot * 0x800) + 0x13C; }
-    private get field_13E_addr() { return this.chao_data() + (this.slot * 0x800) + 0x13E; }
-    private get energy_addr() { return this.chao_data() + (this.slot * 0x800) + 0x148; }
-    private get normal_curiosity_addr() { return this.chao_data() + (this.slot * 0x800) + 0x14A; }
-    private get field_14B_addr() { return this.chao_data() + (this.slot * 0x800) + 0x14B; }
-    private get cry_baby_energetic_addr() { return this.chao_data() + (this.slot * 0x800) + 0x14C; }
-    private get naive_normal_addr() { return this.chao_data() + (this.slot * 0x800) + 0x14D; }
-    private get field_14E_addr() { return this.chao_data() + (this.slot * 0x800) + 0x14E; }
-    private get normal_bigeater_addr() { return this.chao_data() + (this.slot * 0x800) + 0x150; }
-    private get field_151_addr() { return this.chao_data() + (this.slot * 0x800) + 0x151; }
-    private get normal_carefree_addr() { return this.chao_data() + (this.slot * 0x800) + 0x155; }
-    private get field_156_addr() { return this.chao_data() + (this.slot * 0x800) + 0x156; }
-    private get favorite_fruit_addr() { return this.chao_data() + (this.slot * 0x800) + 0x157; }
-    private get field_158_addr() { return this.chao_data() + (this.slot * 0x800) + 0x158; }
-    private get cough_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x15A; }
-    private get cold_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x15B; }
-    private get rash_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x15C; }
-    private get runny_nose_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x15D; }
-    private get hiccups_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x15E; }
-    private get stomach_ache_level_addr() { return this.chao_data() + (this.slot * 0x800) + 0x15F; }
-    private get field_166_addr() { return this.chao_data() + (this.slot * 0x800) + 0x166; }
-    private get field_190_addr() { return this.chao_data() + (this.slot * 0x800) + 0x190; }
-    private get field_4DC_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4DC; }
-    private get arm_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4E4; }
-    private get ear_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4E5; }
-    private get eyebrow_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4E6; }
-    private get forehead_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4E7; }
-    private get leg_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4E8; }
-    private get tail_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4E9; }
-    private get wing_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4EA; }
-    private get unknown_type_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4EB; }
-    private get field_4EC_addr() { return this.chao_data() + (this.slot * 0x800) + 0x4EC; }
+
+    get pointer() { return current_game.chao_data + (this.slot * 0x800) }
+    private get gap_000_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x000; }
+    private get name_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x012; }
+    private get gap_019_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x019; }
+    private get swim_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x020; }
+    private get fly_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x021; }
+    private get run_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x022; }
+    private get power_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x023; }
+    private get stamina_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x024; }
+    private get lucky_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x025; }
+    private get intelligence_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x026; }
+    private get unknown_fraction_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x027; }
+    private get swim_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x028; }
+    private get fly_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x029; }
+    private get run_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x02A; }
+    private get power_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x02B; }
+    private get stamina_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x02C; }
+    private get lucky_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x02D; }
+    private get intelligence_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x02E; }
+    private get unknown_grade_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x02F; }
+    private get swim_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x030; }
+    private get fly_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x031; }
+    private get run_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x032; }
+    private get power_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x033; }
+    private get stamina_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x034; }
+    private get luck_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x035; }
+    private get intelligence_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x036; }
+    private get unknown_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x037; }
+    private get swim_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x038; }
+    private get fly_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x03A; }
+    private get run_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x03C; }
+    private get power_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x03E; }
+    private get stamina_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x040; }
+    private get luck_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x042; }
+    private get intelligence_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x044; }
+    private get unknown_stat_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x045; }
+    private get field_046_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x046; }
+    private get type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x080; }
+    private get garden_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x081; }
+    private get happiness_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x082; }
+    private get field_084_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x084; }
+    private get clock_rollovers_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x086; }
+    private get field_088_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x088; }
+    private get lifespan_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x08A; }
+    private get lifespan2_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x08C; }
+    private get reincarnations_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x08E; }
+    private get field_090_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x090; }
+    private get power_run_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0A8; }
+    private get fly_swim_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0AC; }
+    private get alignment_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0B0; }
+    private get gap_0B4_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0B4; }
+    private get evolution_progress_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0C0; }
+    private get gap_0C4_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0C4; }
+    private get eye_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D1; }
+    private get mouth_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D2; }
+    private get ball_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D3; }
+    private get gap_0D4_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D4; }
+    private get headgear_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D5; }
+    private get hide_feet_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D6; }
+    private get medal_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D7; }
+    private get color_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D8; }
+    private get monotone_highlights_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0D9; }
+    private get texture_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0DA; }
+    private get shiny_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0DB; }
+    private get egg_color_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0DC; }
+    private get body_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0DD; }
+    private get body_type_animal_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0DE; }
+    private get field_0DF_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x0DF; }
+    private get sa2b_arm_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x11C; }
+    private get sa2b_ear_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x11D; }
+    private get sa2b_forehead_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x11E; }
+    private get sa2b_horn_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x11F; }
+    private get sa2b_leg_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x120; }
+    private get sa2b_tail_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x121; }
+    private get sa2b_wing_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x122; }
+    private get sa2b_face_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x123; }
+    private get field_124_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x124; }
+    private get joy_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x12C; }
+    private get field_12D_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x12D; }
+    private get urge_to_cry_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x12E; }
+    private get fear_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x12F; }
+    private get field_130_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x130; }
+    private get dizziness_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x131; }
+    private get field_132_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x132; }
+    private get sleepiness_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x134; }
+    private get tiredness_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x136; }
+    private get hunger_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x138; }
+    private get mate_desire_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x13A; }
+    private get boredom_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x13C; }
+    private get field_13E_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x13E; }
+    private get energy_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x148; }
+    private get normal_curiosity_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x14A; }
+    private get field_14B_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x14B; }
+    private get cry_baby_energetic_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x14C; }
+    private get naive_normal_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x14D; }
+    private get field_14E_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x14E; }
+    private get normal_bigeater_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x150; }
+    private get field_151_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x151; }
+    private get normal_carefree_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x155; }
+    private get field_156_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x156; }
+    private get favorite_fruit_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x157; }
+    private get field_158_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x158; }
+    private get cough_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x15A; }
+    private get cold_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x15B; }
+    private get rash_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x15C; }
+    private get runny_nose_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x15D; }
+    private get hiccups_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x15E; }
+    private get stomach_ache_level_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x15F; }
+    private get field_166_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x166; }
+    private get field_190_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x190; }
+    private get field_4DC_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4DC; }
+    private get arm_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4E4; }
+    private get ear_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4E5; }
+    private get eyebrow_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4E6; }
+    private get forehead_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4E7; }
+    private get leg_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4E8; }
+    private get tail_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4E9; }
+    private get wing_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4EA; }
+    private get unknown_type_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4EB; }
+    private get field_4EC_addr() { return current_game.chao_data + (this.slot * 0x800) + 0x4EC; }
 
     sadx_animal_behaviors: ChaoAPI.ISADXAnimalFlags;
     sa2_animal_behaviors: ChaoAPI.ISA2BAnimalFlags;
@@ -141,22 +142,22 @@ export class ChaoData extends JSONTemplate implements ChaoAPI.IChaoData {
     sa2b_character_bonds: ChaoAPI.ISA2BCharacterBonds;
     dna: ChaoAPI.IChaoDNA;
 
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, chao_data_func: () => number, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, slot: number) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
         this.slot = slot;
-        this.chao_data = chao_data_func;
-        this.sadx_animal_behaviors = new SADXAnimalFlags(ModLoader, log, slot);
-        this.sa2_animal_behaviors = new SA2BAnimalFlags(ModLoader, log, slot);
-        this.sa2b_skills = new ClassroomLessonFlags(ModLoader, log, slot);
-        this.sa2b_toys = new ToyFlags(ModLoader, log, slot);
-        this.sadx_character_bonds = new SADXCharacterBonds(ModLoader, log, slot);
-        this.sa2b_character_bonds = new SA2BCharacterBonds(ModLoader, log, slot);
-        this.dna = new ChaoDNA(ModLoader, log, slot);
+        this.sadx_animal_behaviors = new SADXAnimalFlags(ModLoader, slot);
+        this.sa2_animal_behaviors = new SA2BAnimalFlags(ModLoader, slot);
+        this.sa2b_skills = new ClassroomLessonFlags(ModLoader, slot);
+        this.sa2b_toys = new ToyFlags(ModLoader, slot);
+        this.sadx_character_bonds = new SADXCharacterBonds(ModLoader, slot);
+        this.sa2b_character_bonds = new SA2BCharacterBonds(ModLoader, slot);
+        this.dna = new ChaoDNA(ModLoader, slot);
     }
 
     jsonFields: string[] = [
+        'instance',
         'pointer',
         'raw',
         'name',
@@ -287,8 +288,8 @@ export class ChaoData extends JSONTemplate implements ChaoAPI.IChaoData {
         'field_4EC'
     ];
 
-    get raw() { return this.emulator.rdramReadBuffer(this.chao_data() + (0x800 * this.slot), 0x800); }
-    set raw(buf: Buffer) { this.emulator.rdramWriteBuffer(this.chao_data() + (0x800 * this.slot), buf); }
+    get raw() { return this.emulator.rdramReadBuffer(current_game.chao_data + (0x800 * this.slot), 0x800); }
+    set raw(buf: Buffer) { this.emulator.rdramWriteBuffer(current_game.chao_data + (0x800 * this.slot), buf); }
 
     get name() { return ChaoString.decode(this.emulator.rdramReadBuffer(this.name_addr, 0x7)); }
     set name(str: string) { this.emulator.rdramWriteBuffer(this.name_addr, ChaoString.encode(str)); }

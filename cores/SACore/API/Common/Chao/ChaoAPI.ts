@@ -953,9 +953,14 @@ export interface ISeed {
 
 export interface IBlackMarketItem {
     /* 0x0 */ category: ItemCategory; // 0x1
-    /* 0x1 */ type: SADXEggColor | SA2BEggColor | SADXFruit | SA2BFruit | Seed | SADXHat | SA2BHat | Theme
+    /* 0x1 */ type: SADXEggColor | SA2BEggColor | SADXFruit | SA2BFruit | Seed | SADXHat | SA2BHat | Theme;
 }
 
 export interface IChaoGarden {
-    chaos: IChaoData[]
+    chaos: IChaoData[];
+    animals: IAnimal[];
+    fruits: IFruit[];
+    hats: IHat[];
+    seeds: ISeed[];
+    black_market_items: IBlackMarketItem[];
 }

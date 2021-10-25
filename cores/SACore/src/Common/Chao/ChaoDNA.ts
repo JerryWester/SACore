@@ -43,13 +43,47 @@ export class ChaoDNA extends JSONTemplate implements ChaoAPI.IChaoDNA {
     private get egg_color2_addr()               { return this.instance + (this.slot * 0x800) + 0x438 + 0x9D; }
     private get gap_9E_addr()                   { return this.instance + (this.slot * 0x800) + 0x438 + 0x9E; }
     
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, slot: number) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
         this.instance = current_game.chao_data;
         this.slot = slot;
     }
+
+    jsonFields: string[] = [
+        "reset_trigger",           
+        "swim_stat_grade1",        
+        "swim_stat_grade2",        
+        "fly_stat_grade1",         
+        "fly_stat_grade2",         
+        "run_stat_grade1",         
+        "run_stat_grade2",         
+        "power_stat_grade1",       
+        "power_stat_grade2",       
+        "stamina_stat_grade1",     
+        "stamina_stat_grade2",     
+        "luck_stat_grade1",        
+        "luck_stat_grade2",        
+        "intelligence_stat_grade1",
+        "intelligence_stat_grade2",
+        "unknown_stat_grade1",     
+        "unknown_stat_grade2",     
+        "favorite_fruit1",         
+        "favorite_fruit2",         
+        "color1",                  
+        "color2",                  
+        "monotone_flag1",          
+        "monotone_flag2",          
+        "texture1",                
+        "texture2",                
+        "shiny_flag1",             
+        "shiny_flag2",             
+        "egg_color1",              
+        "egg_color2",      
+    ];
+
+            
 
     // chars
     get reset_trigger()            { return this.emulator.rdramRead8(this.reset_trigger_addr) !== 0;      }

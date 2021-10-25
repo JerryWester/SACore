@@ -33,10 +33,6 @@ export class SonicAdventureDX implements ICore, API.SADX.ISADXCore, API.Common.I
 
     chao_data() { return this.ModLoader.emulator.rdramRead32(0x81055158) }
 
-    generateChao() {
-        //console.log("Generating chao_data: " + this.chao_data().toString(16));
-        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger, this.chao_data);
-    }
 
     @Preinit()
     preinit() {
@@ -95,7 +91,7 @@ export class SonicAdventureDX implements ICore, API.SADX.ISADXCore, API.Common.I
             this.sonic,
             this.ModLoader.emulator
         );
-
+        this.chao = new ChaoGarden(this.ModLoader);
         this.ModLoader.utils.setIntervalFrames(() => {
             //console.log('--------------------------------------------');
             //console.log(`black_market_rings: ${this.save.black_market_rings}`);

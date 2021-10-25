@@ -3,7 +3,7 @@ import { IRomHeader } from 'modloader64_api/IRomHeader';
 import { ModLoaderAPIInject } from "modloader64_api/ModLoaderAPIInjector";
 import { IModLoaderAPI, ILogger, ICore, ModLoaderEvents } from "modloader64_api/IModLoaderAPI";
 import { bus, EventHandler, EventsClient } from "modloader64_api/EventHandler";
-import { ROMHeaders } from "./SACore";
+import { current_game, ROMHeaders } from "./SACore";
 import * as API from '../API/imports';
 import { ChaoGarden } from "./Common/Chao/ChaoGarden";
 import { SaveContext } from "./SA2B/SaveContext";
@@ -24,7 +24,6 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
     global!: API.SA2B.IGlobalContext;
     helper!: API.SA2B.ISA2BHelper;
     last_known_level = -1;
-    isChaoSafe = false;
     eventTicks: Map<string, Function> = new Map<string, Function>();
     touching_loading_zone = false;
     isSaveLoaded = false;
@@ -98,11 +97,6 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
         chao.hide_feet = !Math.floor(Math.random() * 2);
     }
 
-    generateChao() {
-        //console.log("Generating chao_data: " + this.chao_data().toString(16));
-        this.chao = new ChaoGarden(this.ModLoader, this.ModLoader.logger, this.chao_data);
-    }
-
     @Preinit()
     preinit() {
     }
@@ -138,6 +132,7 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
                 bus.emit(SA2BEvents.ON_LEVEL_CHANGE, this.last_known_level);
                 this.touching_loading_zone = false;
                 this.temp = true;
+                //if(cur === 90) this.generateChao();
             }
             if (this.global.current_frame_count === 60) this.temp = false;
         });
@@ -163,12 +158,12 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
             this.sonic,
             this.ModLoader.emulator
         );
+        this.chao = new ChaoGarden(this.ModLoader);
+        //this.ModLoader.utils.setIntervalFrames(() => {
 
-       this.ModLoader.utils.setIntervalFrames(() => {
+        //        console.log(`Emblem Count: ${this.save.emblem_count}`);
 
-               console.log(`Emblem Count: ${this.save.emblem_count}`);
-
-       }, 300);
+        //}, 300);
     }
 
     @onTick()
@@ -178,24 +173,10 @@ export class SonicAdventure2Battle implements ICore, API.SA2B.ISA2BCore, API.Com
                 value();
             });
         }
-        if (this.global.current_level !== 90) this.isChaoSafe = false;
-        else if (this.global.current_level === 90) {
-            if (this.global.current_frame_count === 20) {
-                this.generateChao();
-                this.isChaoSafe = true;
-            }
-            if (this.isChaoSafe) {
-                if ((this.global.current_frame_count % 1000) === 0) {
-                    for (let i = 0; i < 24; i++) {
-                        if (this.chao.chaos[i].garden !== API.ChaoAPI.ChaoGarden.UNDEFINED) {
-                            // console.log(`Chao[${i}] Name: ${this.chao.chaos[i].name}`);
-                            // console.log(`Chao[${i}] PTR: ${this.chao.chaos[i].pointer.toString(16)}`);
-                            // console.log(`Chao[${i}] Garden: ${this.chao.chaos[i].garden}`);
-                        }
-                    }
-                }
-            }
+        if (this.helper.isInGame() && this.global.current_level === 90) {
+            current_game.chao_data = (this.ModLoader.emulator.rdramRead32(0x803AD80C) + 0x48E4); //Chao instance
         }
+
     }
 
     @onPostTick()

@@ -13,7 +13,7 @@ export class SADXAnimalFlags extends JSONTemplate implements ChaoAPI.ISADXAnimal
     private flag_manager: FlagManager;
     private get flags_addr() { return this.instance + (this.slot * 0x800) + 0x4E0; }
     
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, slot: number) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
@@ -97,7 +97,7 @@ export class SA2BAnimalFlags extends JSONTemplate implements ChaoAPI.ISA2BAnimal
     private flag_manager: FlagManager;
     private get flags_addr() { return this.instance + (this.slot * 0x800) + 0x4E0; }
     
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, slot: number) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
@@ -205,7 +205,7 @@ export class ClassroomLessonFlags extends JSONTemplate implements ChaoAPI.IClass
     private flag_manager: FlagManager;
     private get flags_addr() { return this.instance + (this.slot * 0x800) + 0x4E0; }
     
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, slot: number) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
@@ -321,7 +321,7 @@ export class ToyFlags extends JSONTemplate implements ChaoAPI.IToyFlags {
     private flag_manager: FlagManager;
     private get flags_addr() { return this.instance + (this.slot * 0x800) + 0x4E0; }
     
-    constructor(ModLoader: IModLoaderAPI, log: ILogger, slot: number) {
+    constructor(ModLoader: IModLoaderAPI, slot: number) {
         super();
         this.ModLoader = ModLoader;
         this.emulator = ModLoader.emulator;
